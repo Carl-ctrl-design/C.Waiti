@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- Basic Meta -->
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO -->
+<title>Customer Segmentation Analysis | Carlton Waiti</title>
+
+<meta name="description" content="Customer Segmentation Analysis project by Carlton Waiti. Discover customer groups, behavioral patterns, and strategic insights using data analytics, clustering techniques, and business intelligence.">
+
+<meta name="author" content="Carlton Waiti">
+
+<meta name="keywords" content="Customer Segmentation Analysis, Carlton Waiti, Data Analytics Project, Customer Clustering, Business Intelligence, Excel, SQL, Power BI, Data Visualization">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Customer Segmentation Analysis | Carlton Waiti">
+<meta property="og:description" content="Explore Carlton Waiti's customer segmentation project analyzing purchasing behavior and customer groups using data analytics.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../assets/images/projects/customer-segmentation-cover.jpg">
+
+<!-- Favicon -->
+<link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/man.jpg">
+
+<!-- CSS -->
+<link rel="stylesheet" href="../assets/css/vendor/fontawesome.css">
+<link rel="stylesheet" href="../assets/css/plugins/swiper.css">
+<link rel="stylesheet" href="../assets/css/plugins/odometer.css">
+<link rel="stylesheet" href="../assets/css/vendor/animate.min.css">
+<link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/css/style.css">
+
+<style>
+
+/* HERO */
+.case-study-hero{
+padding:120px 0 30px;
+text-align:center;
+}
+
+.case-card{
+padding:30px;
+border-radius:18px;
+background:#fff;
+box-shadow:0 10px 30px rgba(0,0,0,0.05);
+margin-bottom:25px;
+}
+
+.case-section-title{
+margin-top:28px;
+margin-bottom:12px;
+}
+
+/* ======================
+HEADER FIX
+====================== */
+
+.tmp-header-area-start .header-content{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:20px;
+min-height:80px;
+}
+
+.tmp-header-area-start .logo{
+display:flex;
+align-items:center;
+flex-shrink:0;
+}
+
+.tmp-header-area-start .logo img,
+.tmp-header-area-start .logo .logo-dark,
+.tmp-header-area-start .logo .logo-white{
+max-width:170px;
+max-height:55px;
+height:auto;
+object-fit:contain;
+}
+
+/* CENTER THE NAVIGATION */
+.tmp-mainmenu-nav{
+flex:1;
+display:flex;
+justify-content:center;
+}
+
+.tmp-mainmenu{
+display:flex;
+gap:30px;
+align-items:center;
+list-style:none;
+margin:0;
+padding:0;
+}
+
+.tmp-mainmenu li a{
+font-weight:500;
+text-decoration:none;
+position:relative;
+}
+
+/* Active underline */
+.tmp-mainmenu li a:hover::after,
+.tmp-mainmenu li a.active::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-8px;
+width:100%;
+height:2px;
+background:currentColor;
+opacity:.9;
+}
+
+.tmp-header-right{
+flex-shrink:0;
+display:flex;
+align-items:center;
+}
+
+/* Tablet */
+@media (max-width:991px){
+
+.tmp-header-area-start .logo img{
+max-width:150px;
+max-height:50px;
+}
+
+.case-study-hero{
+padding:100px 0 20px;
+}
+
+}
+
+/* Mobile */
+@media (max-width:576px){
+
+.tmp-header-area-start .logo img{
+max-width:130px;
+max-height:44px;
+}
+
+.case-study-hero h1{
+font-size:28px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body class="tmp-white-version">
+
+<!-- HEADER -->
+<header class="tmp-header-area-start header-one header--sticky header--transparent">
+
+<div class="container">
+<div class="row">
+<div class="col-lg-12">
+
+<div class="header-content">
+
+<!-- Logo -->
+<div class="logo">
+<a href="../index.html">
+
+<img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti">
+
+<img class="logo-white" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti">
+
+</a>
+</div>
+
+<!-- CENTERED NAV -->
+<nav class="tmp-mainmenu-nav d-none d-xl-block">
+
+<ul class="tmp-mainmenu">
+
+<li><a href="../index.html#home">Home</a></li>
+
+<li><a href="../index.html#specialization">What I Do</a></li>
+
+<li><a href="../index.html#projects">Projects</a></li>
+
+<li><a href="../index.html#contacts">Contact</a></li>
+
+</ul>
+
+</nav>
+
+<!-- Right Button -->
+<div class="tmp-header-right">
+
+<a class="tmp-btn btn-border btn-sm radius-round" href="index.html">
+
+All Projects
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+</header>
+
+<!-- HERO -->
+<section class="case-study-hero">
+<div class="container">
+
+<div class="section-head">
+
+<span class="subtitle theme-gradient">Data Analysis Case Study</span>
+
+<h1 class="title">
+Customer Segmentation & Customer Value Analysis
+</h1>
+
+<p class="description section-sm">
+This project analyzes customer purchasing behavior to identify high-value customer segments,
+understand purchasing patterns, and help businesses improve targeting, retention, and marketing efficiency.
+</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- CONTENT -->
+<section class="tmp-section-gapBottom">
+<div class="container">
+
+<div class="row g-5">
+
+<!-- MAIN CONTENT -->
+<div class="col-lg-8">
+
+<div class="tpm-custom-box-bg case-card">
+
+<h3>Business Problem</h3>
+
+<p>
+Businesses often treat all customers the same, even though different customers generate very different levels of value.
+This project explores how customer segmentation can help a company identify its most valuable customers and design more effective marketing strategies.
+</p>
+
+<h3 class="case-section-title">Dataset</h3>
+
+<ul>
+<li>Customer ID</li>
+<li>Order ID</li>
+<li>Purchase Date</li>
+<li>Product Category</li>
+<li>Purchase Amount</li>
+<li>Region</li>
+</ul>
+
+<p>
+The dataset represents transactional purchase data that allows analysis of spending behavior and purchase frequency.
+</p>
+
+
+<h3 class="case-section-title">Analysis Approach</h3>
+
+<ul>
+<li>Data cleaning and preparation</li>
+<li>Grouping customers by purchasing patterns</li>
+<li>Revenue analysis by customer segment</li>
+<li>Identification of repeat purchase behavior</li>
+<li>Calculation of customer value indicators</li>
+</ul>
+
+
+<h3 class="case-section-title">Key Insights</h3>
+
+<ul>
+<li>A small percentage of customers generate the majority of total revenue.</li>
+<li>High-value customers tend to purchase more frequently and spend significantly more per order.</li>
+<li>Some customer segments purchase rarely but generate large one-time purchases.</li>
+<li>Low-frequency customers show high potential for retention campaigns.</li>
+</ul>
+
+
+<h3 class="case-section-title">Recommendations</h3>
+
+<ul>
+<li>Develop loyalty programs for high-value customers.</li>
+<li>Create targeted marketing campaigns for mid-value segments.</li>
+<li>Implement retention strategies for customers who show declining purchase frequency.</li>
+<li>Use segmentation insights to personalize marketing messages.</li>
+</ul>
+
+</div>
+
+</div>
+
+
+<!-- SIDEBAR -->
+<div class="col-lg-4">
+
+<div class="tpm-custom-box-bg case-card">
+
+<h4>Tools Used</h4>
+
+<ul>
+<li>SQL</li>
+<li>Excel</li>
+<li>Data Visualization</li>
+</ul>
+
+
+<h4 class="case-section-title">Skills Demonstrated</h4>
+
+<ul>
+<li>Customer segmentation</li>
+<li>Behavioral analysis</li>
+<li>Business insights</li>
+<li>Data cleaning</li>
+</ul>
+
+
+<h4 class="case-section-title">Project Assets</h4>
+
+<ul>
+<li><a href="#">SQL queries (GitHub)</a></li>
+<li><a href="#">Dataset</a></li>
+<li><a href="#">Analysis report</a></li>
+</ul>
+
+
+<h4 class="case-section-title">Preview</h4>
+
+<img class="img-fluid rounded-4"
+src="../assets/images/latest-portfolio/quickbooks-financial-dashboard-1024x587.webp"
+alt="Customer segmentation analysis preview">
+
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- JS -->
+<script src="../assets/js/vendor/jquery.js"></script>
+<script src="../assets/js/vendor/bootstrap.min.js"></script>
+<script src="../assets/js/main.js"></script>
+
+</body>
+</html>

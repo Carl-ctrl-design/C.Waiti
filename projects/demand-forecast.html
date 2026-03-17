@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic Meta -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Demand Forecasting & Planning | Carlton Waiti</title>
+  <meta name="description" content="Demand Forecasting and Planning project by Carlton Waiti. Explore forecasting methods, planning insights, trend analysis, and data-driven recommendations for better business decision-making.">
+  <meta name="author" content="Carlton Waiti">
+  <meta name="keywords" content="Demand Forecasting, Planning Analysis, Carlton Waiti, Forecasting Project, Business Intelligence, Data Analytics Portfolio, Excel, SQL, Power BI, Data Visualization">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Demand Forecasting & Planning | Carlton Waiti">
+  <meta property="og:description" content="Explore Carlton Waiti's demand forecasting and planning project featuring trend analysis, business insights, and data-driven recommendations.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="../assets/images/projects/demand-forecasting-cover.jpg">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/man.jpg">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/vendor/fontawesome.css">
+  <link rel="stylesheet" href="../assets/css/plugins/swiper.css">
+  <link rel="stylesheet" href="../assets/css/plugins/odometer.css">
+  <link rel="stylesheet" href="../assets/css/vendor/animate.min.css">
+  <link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <style>
+    /* =========================
+       HEADER
+    ========================= */
+    .tmp-header-area-start .header-content{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      min-height:80px;
+    }
+
+    .tmp-header-area-start .logo{
+      display:flex;
+      align-items:center;
+      flex-shrink:0;
+    }
+
+    .tmp-header-area-start .logo a{
+      display:flex;
+      align-items:center;
+    }
+
+    .tmp-header-area-start .logo img,
+    .tmp-header-area-start .logo .logo-dark,
+    .tmp-header-area-start .logo .logo-white{
+      display:block;
+      max-width:170px;
+      max-height:55px;
+      width:auto;
+      height:auto;
+      object-fit:contain;
+    }
+
+    .tmp-mainmenu-nav{
+      flex:1;
+      display:flex;
+      justify-content:center;
+    }
+
+    .tmp-mainmenu{
+      display:flex;
+      align-items:center;
+      gap:30px;
+      list-style:none;
+      margin:0;
+      padding:0;
+    }
+
+    .tmp-mainmenu li a{
+      position:relative;
+      text-decoration:none;
+      font-weight:500;
+    }
+
+    .tmp-mainmenu li a:hover::after,
+    .tmp-mainmenu li a.active::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-8px;
+      width:100%;
+      height:2px;
+      background:currentColor;
+      opacity:.9;
+    }
+
+    .tmp-header-right{
+      flex-shrink:0;
+      display:flex;
+      align-items:center;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+    .case-study-hero{
+      padding:120px 0 30px;
+      text-align:center;
+    }
+
+    .case-study-hero h1{
+      font-size:40px;
+      font-weight:700;
+      margin-bottom:12px;
+    }
+
+    .case-study-hero p{
+      max-width:760px;
+      margin:0 auto;
+      color:#666;
+      font-size:17px;
+      line-height:1.7;
+    }
+
+    /* =========================
+       CARD
+    ========================= */
+    .case-card{
+      padding:30px;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 30px rgba(0,0,0,0.05);
+      margin-bottom:24px;
+    }
+
+    .case-section-title{
+      margin-top:28px;
+      margin-bottom:12px;
+    }
+
+    .case-links a{
+      display:block;
+      margin-bottom:8px;
+    }
+
+    .note-box{
+      margin-top:18px;
+      padding:14px 16px;
+      border-radius:14px;
+      background:rgba(0,0,0,0.05);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    /* =========================
+       TABLET
+    ========================= */
+    @media (max-width: 991px){
+      .tmp-header-area-start .logo img,
+      .tmp-header-area-start .logo .logo-dark,
+      .tmp-header-area-start .logo .logo-white{
+        max-width:150px;
+        max-height:50px;
+      }
+
+      .case-study-hero{
+        padding:100px 0 24px;
+      }
+
+      .case-study-hero h1{
+        font-size:32px;
+      }
+
+      .case-study-hero p{
+        font-size:15px;
+      }
+
+      .case-card{
+        padding:24px;
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+    @media (max-width: 576px){
+      .tmp-header-area-start .logo img,
+      .tmp-header-area-start .logo .logo-dark,
+      .tmp-header-area-start .logo .logo-white{
+        max-width:130px;
+        max-height:44px;
+      }
+
+      .case-study-hero{
+        padding:95px 0 20px;
+      }
+
+      .case-study-hero h1{
+        font-size:28px;
+      }
+
+      .case-study-hero p{
+        font-size:15px;
+        line-height:1.6;
+      }
+
+      .case-card{
+        padding:20px;
+        border-radius:14px;
+      }
+
+      .note-box{
+        font-size:13px;
+      }
+    }
+  </style>
+</head>
+
+<body class="tmp-white-version">
+
+  <!-- HEADER -->
+  <header class="tmp-header-area-start header-one header--sticky header--transparent">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="header-content">
+
+            <!-- Logo -->
+            <div class="logo">
+              <a href="../index.html">
+                <img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti">
+                <img class="logo-white" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti">
+              </a>
+            </div>
+
+            <!-- Centered Nav -->
+            <nav class="tmp-mainmenu-nav d-none d-xl-block">
+              <ul class="tmp-mainmenu">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#specialization">What I Do</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#contacts">Contact</a></li>
+              </ul>
+            </nav>
+
+            <!-- Right Button -->
+            <div class="tmp-header-right">
+              <a class="tmp-btn btn-border btn-sm radius-round" href="index.html">All Projects</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="case-study-hero">
+    <div class="container">
+      <div class="section-head">
+        <span class="subtitle theme-gradient">Forecasting Case Study</span>
+        <h1 class="title">Demand Forecasting & Inventory Planning</h1>
+        <p class="description section-sm">
+          Forecasting demand helps businesses plan inventory, reduce stockouts, and avoid excess stock.
+          This project demonstrates a practical forecasting workflow and how insights translate into decisions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="tmp-section-gapBottom">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- MAIN -->
+        <div class="col-lg-8">
+          <div class="tpm-custom-box-bg case-card">
+
+            <h3>Business Problem</h3>
+            <p>
+              The business needs to plan inventory and staffing for upcoming months, but demand fluctuates due to seasonality and trend shifts.
+              Inaccurate forecasts cause lost sales (stockouts) or wasted cash (overstock).
+            </p>
+
+            <h3 class="case-section-title">Goal</h3>
+            <ul>
+              <li>Forecast demand for the next 3–6 months.</li>
+              <li>Identify seasonality and trend patterns.</li>
+              <li>Translate forecast into inventory planning actions.</li>
+            </ul>
+
+            <h3 class="case-section-title">Method</h3>
+            <ul>
+              <li>Exploratory analysis of historical sales (trend + seasonality).</li>
+              <li>Baseline forecast (moving average / exponential smoothing).</li>
+              <li>Compare forecast accuracy using a holdout period.</li>
+              <li>Create planning recommendations based on forecast ranges.</li>
+            </ul>
+
+            <div class="note-box">
+              <strong>Honest note:</strong> Forecasts are never perfect. The goal is to be “usefully accurate”
+              and reduce uncertainty for planning decisions.
+            </div>
+
+            <h3 class="case-section-title">Key Insights</h3>
+            <ul>
+              <li>Strong seasonal peaks appear in specific months (high demand periods).</li>
+              <li>Some product lines have stable demand; others are volatile and need safety stock.</li>
+              <li>Forecast ranges are more useful than single numbers for inventory decisions.</li>
+            </ul>
+
+            <h3 class="case-section-title">Recommendations</h3>
+            <ul>
+              <li>Increase stock and staffing ahead of peak months.</li>
+              <li>Use safety stock for volatile categories to reduce stockouts.</li>
+              <li>Track forecast error monthly and update the model regularly.</li>
+            </ul>
+
+          </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-4">
+          <div class="tpm-custom-box-bg case-card">
+
+            <h4>Tools Used</h4>
+            <ul>
+              <li>Excel (Forecasting)</li>
+              <li>Optional: Python (time series)</li>
+            </ul>
+
+            <h4 class="case-section-title">Project Assets</h4>
+            <div class="case-links">
+              <a href="#" target="_blank" rel="noopener">Forecast workbook / model (add later)</a>
+              <a href="#" target="_blank" rel="noopener">Dataset (add later)</a>
+              <a href="#" target="_blank" rel="noopener">Short report PDF (add later)</a>
+            </div>
+
+            <h4 class="case-section-title">Preview</h4>
+            <img class="img-fluid rounded-4"
+              src="../assets/images/latest-portfolio/Business-Intelligence-KPI-Dashboard-Presentation.png"
+              alt="Forecast preview">
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- JS -->
+  <script src="../assets/js/vendor/jquery.js"></script>
+  <script src="../assets/js/vendor/bootstrap.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+
+</body>
+</html>
