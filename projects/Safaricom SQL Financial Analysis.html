@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safaricom SQL Financial Analysis | Carlton Waiti — Rated 9.6/10</title>
+  <meta name="description" content="Carlton Waiti's Safaricom SQL Financial Analysis — Rated 9.6/10. PostgreSQL, IFRS-adjusted Ernst & Young audited data, 10 years, 3 analytical views, 6 CFO-level queries, dedicated data_notes table for accounting transparency.">
+  <meta name="author" content="Carlton Waiti">
+  <meta property="og:title" content="Safaricom SQL Financial Analysis | Carlton Waiti — Rated 9.6/10">
+  <meta property="og:type" content="article">
+  <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/man.jpg">
+  <link rel="stylesheet" href="../assets/css/vendor/fontawesome.css">
+  <link rel="stylesheet" href="../assets/css/vendor/animate.min.css">
+  <link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:#C9A84C; --gold-light:#E8C96A; --gold-dim:rgba(201,168,76,0.14);
+      --charcoal:#1C1C1E; --off-white:#F8F6F1; --text-muted:#6B6B72;
+      --border:rgba(201,168,76,0.22); --card-bg:#FFFFFF;
+      --font-display:'Playfair Display',Georgia,serif;
+      --font-body:'DM Sans',system-ui,sans-serif;
+      --radius:14px; --radius-lg:20px;
+    }
+    body { font-family:var(--font-body)!important; font-size:17px!important; color:var(--charcoal); background:#fff; }
+    h1,h2,h3,h4 { font-family:var(--font-display)!important; }
+    .tmp-header-area-start { border-bottom:1px solid var(--border); background:rgba(255,255,255,0.97)!important; backdrop-filter:blur(12px); }
+    .tmp-header-area-start .header-content { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .tmp-header-area-start .logo { display:flex; align-items:center; flex-shrink:0; }
+    .tmp-header-area-start .logo img { max-width:200px; max-height:62px; height:auto; object-fit:contain; }
+    .tmp-mainmenu-nav { flex:1; display:flex; justify-content:center; }
+    .tmp-mainmenu { display:flex; align-items:center; gap:28px; list-style:none; margin:0; padding:0; }
+    .tmp-mainmenu li a { font-size:15px; font-weight:500; text-decoration:none; color:var(--charcoal); transition:color 0.2s; }
+    .tmp-mainmenu li a:hover { color:var(--gold); }
+    .tmp-header-right { flex-shrink:0; display:flex; align-items:center; }
+    .btn-back { display:inline-flex; align-items:center; gap:8px; padding:10px 22px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:14px; font-weight:500; border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; font-family:var(--font-body); transition:all 0.22s; }
+    .btn-back:hover { border-color:var(--gold); color:var(--gold); }
+
+    .cs-hero { padding:110px 0 60px; background:var(--off-white); border-bottom:1px solid var(--border); }
+    .cs-breadcrumb { font-size:13px; color:var(--text-muted); margin-bottom:18px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .cs-breadcrumb a { color:var(--gold); text-decoration:none; }
+    .cs-breadcrumb span { opacity:0.5; }
+    .cs-hero h1 { font-size:clamp(2.1rem,5vw,3.3rem); color:var(--charcoal); line-height:1.15; margin-bottom:20px; }
+    .cs-meta-pill { display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); font-size:14px; color:var(--charcoal); }
+    .cs-meta-pill i { color:var(--gold); font-size:13px; }
+    .cs-meta-pill a { color:inherit; text-decoration:none; }
+    .rating-hero { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:999px; background:var(--gold-dim); border:1px solid var(--border); font-size:16px; font-weight:700; color:var(--gold); }
+    .gold-divider { width:56px; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:2px; margin:12px 0 24px; }
+
+    .cs-body { padding:72px 0 96px; background:#fff; }
+    .cs-block { margin-bottom:48px; }
+    .cs-block-label { font-size:11.5px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .cs-block h2 { font-size:1.7rem; color:var(--charcoal); margin-bottom:16px; line-height:1.25; }
+    .cs-block p { font-size:17px; color:var(--text-muted); line-height:1.85; margin-bottom:14px; }
+    .cs-block p:last-child { margin-bottom:0; }
+    .cs-highlight { border-left:3px solid var(--gold); padding:18px 22px; background:var(--off-white); border-radius:0 var(--radius) var(--radius) 0; margin:20px 0; font-size:17px; color:var(--charcoal); line-height:1.75; }
+
+    .findings-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+    .finding-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius); padding:22px 20px; }
+    .finding-number { font-family:var(--font-display); font-size:2rem; color:var(--gold); font-weight:700; line-height:1; margin-bottom:8px; }
+    .finding-text { font-size:15px; color:var(--text-muted); line-height:1.6; margin:0; }
+
+    /* Query list */
+    .query-list { display:flex; flex-direction:column; gap:12px; margin-top:16px; }
+    .query-item { display:flex; gap:16px; align-items:flex-start; background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; transition:border-color 0.2s; }
+    .query-item:hover { border-color:var(--gold); }
+    .query-num { font-family:var(--font-display); font-size:1.2rem; font-weight:700; color:var(--gold); flex-shrink:0; width:32px; }
+    .query-body { flex:1; }
+    .query-title { font-weight:600; font-size:16px; color:var(--charcoal); margin-bottom:5px; }
+    .query-tech { font-size:13px; color:var(--text-muted); line-height:1.55; }
+
+    /* Views list */
+    .views-grid { display:grid; grid-template-columns:1fr; gap:12px; margin-top:16px; }
+    .view-card { background:var(--charcoal); border:1px solid rgba(201,168,76,0.2); border-radius:var(--radius); padding:20px 22px; }
+    .view-name { font-family:'Courier New',monospace; font-size:14px; font-weight:700; color:var(--gold); margin-bottom:6px; }
+    .view-purpose { font-size:14px; color:rgba(255,255,255,0.75); line-height:1.65; margin:0; }
+
+    /* SQL block */
+    .sql-block { background:var(--charcoal); border-radius:var(--radius); padding:24px 22px; margin:20px 0; overflow-x:auto; }
+    .sql-block pre { margin:0; color:rgba(255,255,255,0.88); font-family:'Courier New',monospace; font-size:13.5px; line-height:1.75; white-space:pre-wrap; }
+    .sql-comment { color:rgba(201,168,76,0.75); }
+    .sql-keyword { color:#79B8FF; }
+    .sql-fn { color:#B392F0; }
+    .sql-string { color:#9ECB90; }
+
+    /* data_notes highlight */
+    .integrity-box { background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(201,168,76,0.04)); border:1px solid var(--border); border-radius:var(--radius); padding:22px 24px; margin:20px 0; }
+    .integrity-box h4 { font-size:1rem; color:var(--charcoal); margin-bottom:10px; }
+    .integrity-box p { font-size:15px; color:var(--text-muted); line-height:1.7; margin:0; }
+
+    .reco-list { list-style:none; padding:0; margin:16px 0 0; display:flex; flex-direction:column; gap:12px; }
+    .reco-list li { display:flex; gap:14px; align-items:flex-start; font-size:16px; color:var(--text-muted); line-height:1.7; }
+    .reco-list li::before { content:"→"; color:var(--gold); font-weight:700; flex-shrink:0; margin-top:2px; }
+
+    .cs-sidebar-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px 24px; margin-bottom:20px; }
+    .cs-sidebar-card h4 { font-size:1rem; color:var(--charcoal); margin-bottom:14px; }
+    .tool-tag { display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500; padding:5px 12px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; }
+    .skill-pill { display:inline-block; font-size:12.5px; padding:5px 13px; border-radius:999px; background:var(--gold-dim); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; font-weight:500; }
+    .cs-link-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); font-size:15px; color:var(--charcoal); text-decoration:none; transition:color 0.2s; }
+    .cs-link-item:last-child { border-bottom:none; padding-bottom:0; }
+    .cs-link-item:hover { color:var(--gold); }
+    .cs-link-item i { color:var(--gold); width:18px; text-align:center; }
+
+    .cs-icon-hero { width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#0A0A14,#1C1C2E); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px; }
+    .cs-icon-hero i { font-size:4rem; color:var(--gold); }
+    .cs-icon-hero span { font-family:var(--font-display); color:rgba(255,255,255,0.7); font-size:1rem; text-align:center; padding:0 20px; }
+
+    .cs-bottom-nav { background:var(--off-white); border-top:1px solid var(--border); padding:40px 0; }
+    .btn-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:var(--charcoal); color:#fff; font-size:15px; font-weight:500; font-family:var(--font-body); border:none; text-decoration:none; transition:all 0.25s; }
+    .btn-gold:hover { background:var(--gold); color:var(--charcoal); transform:translateY(-1px); }
+    .btn-outline-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:15px; font-weight:500; font-family:var(--font-body); border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; transition:all 0.25s; }
+    .btn-outline-gold:hover { border-color:var(--gold); color:var(--gold); }
+    .theme-gradient { background:linear-gradient(135deg,var(--gold),var(--gold-light))!important; -webkit-background-clip:text!important; -webkit-text-fill-color:transparent!important; background-clip:text!important; }
+
+    @media(max-width:991px) {
+      .cs-hero { padding:90px 0 44px; }
+      .findings-grid { grid-template-columns:1fr; }
+      .tmp-header-area-start .logo img { max-width:150px; max-height:52px; }
+    }
+    @media(max-width:576px) {
+      .cs-hero h1 { font-size:1.9rem; }
+      .tmp-header-area-start .logo img { max-width:130px; max-height:44px; }
+    }
+  </style>
+</head>
+<body class="tmp-white-version">
+
+  <header class="tmp-header-area-start header-one header--sticky header--transparent">
+    <div class="container"><div class="row"><div class="col-lg-12">
+      <div class="header-content">
+        <div class="logo"><a href="../index.html"><img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti Portfolio"></a></div>
+        <nav class="tmp-mainmenu-nav d-none d-xl-block">
+          <ul class="tmp-mainmenu">
+            <li><a href="../index.html#home">Home</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#contacts">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="tmp-header-right">
+          <a class="btn-back d-none d-xl-flex" href="index.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> All Projects</a>
+        </div>
+      </div>
+    </div></div></div>
+  </header>
+
+  <section class="cs-hero">
+    <div class="container">
+      <div class="cs-breadcrumb">
+        <a href="../index.html">Home</a><span>/</span>
+        <a href="index.html">Projects</a><span>/</span>
+        <span>Safaricom SQL Financial Analysis</span>
+      </div>
+      <div class="row align-items-end">
+        <div class="col-lg-8">
+          <span style="font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px;">Case Study · SQL · Financial Analytics · IFRS · PostgreSQL</span>
+          <h1>Safaricom SQL<br>Financial Analysis</h1>
+          <div class="gold-divider"></div>
+          <p style="font-size:1.15rem;color:var(--text-muted);line-height:1.8;max-width:620px;margin:0 0 24px;">
+            10 years of Ernst &amp; Young audited Safaricom financials analyzed in PostgreSQL — 6 CFO-level queries, 3 analytical views, and a dedicated <code>data_notes</code> table for full accounting transparency. IFRS-adjusted throughout.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="cs-meta-pill"><i class="fas fa-database"></i> PostgreSQL</span>
+            <span class="cs-meta-pill"><i class="fas fa-shield-check"></i> E&amp;Y Audited Data</span>
+            <span class="cs-meta-pill"><i class="fas fa-layer-group"></i> 3 Analytical Views</span>
+            <span class="cs-meta-pill"><i class="fab fa-github"></i> <a href="https://github.com/Carl-ctrl-design/safaricom_sql_financial_analysis" target="_blank" rel="noopener">View on GitHub</a></span>
+          </div>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+          <div class="rating-hero"><i class="fas fa-star"></i> Rated 9.6 / 10</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-body">
+    <div class="container">
+      <div class="row g-5">
+
+        <div class="col-lg-8">
+
+          <div class="cs-block">
+            <div class="cs-block-label">01 · Business Problem</div>
+            <h2>What does a decade of Safaricom's financials actually tell a CFO?</h2>
+            <p>Safaricom is East Africa's most valuable listed company. Its annual reports are publicly available and widely read — but raw annual report data is not analysis. This project asks: what can structured SQL queries applied to 10 years of IFRS-adjusted audited financials reveal that a basic reading of the reports cannot?</p>
+            <p>The analytical challenge was building a database structure rigorous enough to support CFO-level queries — with proper accounting adjustments documented, anomalies flagged, and data lineage transparent — while keeping queries readable and reproducible.</p>
+            <div class="cs-highlight">
+              <strong>What makes this project different:</strong> Most financial SQL projects use publicly scraped data with no accounting context. This project used Ernst &amp; Young audited primary source financials, includes IFRS adjustment notes in the database itself via a dedicated <code>data_notes</code> table, and flags known anomalies (Ethiopia IAS 29, FY2022 capex) so analysts downstream don't misread the numbers.
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">02 · Data Source & Database Design</div>
+            <h2>Audited primary source — IFRS-adjusted throughout</h2>
+            <p>The data source is Safaricom's Ernst &amp; Young audited annual financial statements spanning 10 fiscal years. All figures are in Kenya Shillings (KES millions) and have been adjusted to the same IFRS basis across all years to enable valid period comparisons.</p>
+
+            <div class="findings-grid">
+              <div class="finding-card">
+                <div class="finding-number">10</div>
+                <div class="finding-text">Fiscal years of audited financial data — E&Y primary source</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">3</div>
+                <div class="finding-text">Analytical views built for reusable CFO-level reporting</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">6</div>
+                <div class="finding-text">CFO-level queries covering revenue, margin, capex, and M-PESA</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">9.6</div>
+                <div class="finding-text">Independent rating out of 10 — accounting depth and query quality</div>
+              </div>
+            </div>
+
+            <div class="integrity-box" style="margin-top:24px;">
+              <h4><i class="fas fa-shield-check" style="color:var(--gold);margin-right:8px;"></i>data_notes table — accounting transparency built in</h4>
+              <p>A dedicated <code>data_notes</code> table documents every IFRS adjustment, restatement, and accounting anomaly directly in the database. This means any analyst running queries downstream sees the same context the original analyst used — no hidden assumptions, no unexplained adjustments. This is a professional-grade design choice that most financial SQL projects skip entirely.</p>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">03 · Analytical Views</div>
+            <h2>3 reusable views for CFO-level reporting</h2>
+            <div class="views-grid">
+              <div class="view-card">
+                <div class="view-name">v_revenue_breakdown</div>
+                <div class="view-purpose">Revenue split by line: Mobile Services, M-PESA, Fixed Line, Ethiopia Subsidiary. Includes YoY growth calculation and M-PESA share of total. Designed to be queried directly for any fiscal year range.</div>
+              </div>
+              <div class="view-card">
+                <div class="view-name">v_margin_analysis</div>
+                <div class="view-purpose">EBITDA, EBIT, and Net Profit margin by year — all calculated from IFRS-adjusted line items. Excludes the Ethiopia IAS 29 hyperinflation gain from FY2023 adjusted figures. Documents the exclusion in the data_notes join.</div>
+              </div>
+              <div class="view-card">
+                <div class="view-name">v_capex_intensity</div>
+                <div class="view-purpose">Capex as a percentage of revenue by year. Flags FY2022 as an outlier with a note from the data_notes table explaining the Ethiopia market entry cost vs. infrastructure capex distinction.</div>
+              </div>
+            </div>
+
+            <div style="margin-top:28px;">
+              <p style="font-size:15px;color:var(--text-muted);margin-bottom:12px;">Sample view — revenue breakdown with M-PESA share:</p>
+              <div class="sql-block">
+                <pre><span class="sql-comment">-- v_revenue_breakdown: revenue by line with YoY growth and M-PESA share</span>
+<span class="sql-keyword">CREATE OR REPLACE VIEW</span> v_revenue_breakdown <span class="sql-keyword">AS</span>
+<span class="sql-keyword">SELECT</span>
+  f.fiscal_year,
+  f.mobile_services_revenue,
+  f.mpesa_revenue,
+  f.fixed_line_revenue,
+  f.ethiopia_revenue,
+  f.total_revenue,
+  <span class="sql-comment">-- M-PESA share of group revenue</span>
+  <span class="sql-fn">ROUND</span>(
+    f.mpesa_revenue * 100.0 / <span class="sql-fn">NULLIF</span>(f.total_revenue, 0), 2
+  ) <span class="sql-keyword">AS</span> mpesa_share_pct,
+  <span class="sql-comment">-- YoY total revenue growth</span>
+  <span class="sql-fn">ROUND</span>(
+    (f.total_revenue - <span class="sql-fn">LAG</span>(f.total_revenue) <span class="sql-keyword">OVER</span> (<span class="sql-keyword">ORDER BY</span> f.fiscal_year))
+    * 100.0 /
+    <span class="sql-fn">NULLIF</span>(<span class="sql-fn">LAG</span>(f.total_revenue) <span class="sql-keyword">OVER</span> (<span class="sql-keyword">ORDER BY</span> f.fiscal_year), 0), 2
+  ) <span class="sql-keyword">AS</span> revenue_yoy_growth_pct
+<span class="sql-keyword">FROM</span> financials f
+<span class="sql-keyword">ORDER BY</span> f.fiscal_year;</pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">04 · CFO-Level Queries</div>
+            <h2>6 queries built to answer real strategic questions</h2>
+            <div class="query-list">
+              <div class="query-item">
+                <div class="query-num">01</div>
+                <div class="query-body">
+                  <div class="query-title">10-year revenue trend with M-PESA contribution</div>
+                  <div class="query-tech">Queries v_revenue_breakdown — shows how M-PESA grew from ~27% of revenue in FY2014 to ~42% in FY2023, structurally reshaping the business</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">02</div>
+                <div class="query-body">
+                  <div class="query-title">EBITDA margin trend — reported vs. adjusted</div>
+                  <div class="query-tech">Queries v_margin_analysis — shows both reported margin (including Ethiopia IAS 29 gain) and adjusted margin (excluding it) side by side for FY2023</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">03</div>
+                <div class="query-body">
+                  <div class="query-title">Capex intensity — identifying the FY2022 strategic anomaly</div>
+                  <div class="query-tech">Queries v_capex_intensity with a JOIN to data_notes — surfaces the FY2022 Ethiopia entry cost with the accounting note inline</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">04</div>
+                <div class="query-body">
+                  <div class="query-title">M-PESA COVID zero-rating inflection point</div>
+                  <div class="query-tech">LAG() window function — measures the FY2020 M-PESA revenue dip, FY2021 recovery, and compares the post-COVID baseline to the pre-COVID trend to quantify the structural uplift</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">05</div>
+                <div class="query-body">
+                  <div class="query-title">Revenue per employee proxy — operational efficiency trend</div>
+                  <div class="query-tech">DIVIDE pattern — total revenue divided by headcount data by year. Shows whether Safaricom is becoming more or less efficient per employee as it scales</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">06</div>
+                <div class="query-body">
+                  <div class="query-title">Dividend payout ratio vs. free cash flow — sustainability check</div>
+                  <div class="query-tech">Calculates dividend payments as a percentage of free cash flow (operating cash flow minus capex) — flags years where payout exceeded FCF generation, which is a red flag for dividend sustainability</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">05 · Key Findings</div>
+            <h2>What 10 years of SQL analysis reveals</h2>
+            <div class="cs-highlight">
+              <strong>M-PESA is now the business:</strong> The revenue breakdown query shows M-PESA grew from 27% of group revenue in FY2014 to 42% in FY2023 — and the trajectory continues. Safaricom is no longer a telecoms company with a payments division. It is a financial services platform that happens to own a telecoms network.
+            </div>
+            <div class="cs-highlight">
+              <strong>FY2023 EBITDA is overstated by the Ethiopia IAS 29 gain:</strong> The adjusted margin query shows that if you exclude the hyperinflation accounting gain, FY2023 EBITDA margin is approximately 3–4 percentage points lower than reported. This is a material difference for any investor or analyst using reported figures without adjustment.
+            </div>
+            <div class="cs-highlight">
+              <strong>FY2022 capex is not an infrastructure cycle — it is the Ethiopia bet:</strong> The capex intensity query, joined to the data_notes table, makes this explicit in the database itself. The Ethiopia market entry capitalized cost drove capex/revenue from ~18% (FY2021) to ~29% (FY2022). Normalizing for this, the underlying capex profile of the Kenyan business is stable and declining.
+            </div>
+            <div class="cs-highlight">
+              <strong>Dividend payout exceeded free cash flow in FY2022:</strong> The dividend sustainability query flagged FY2022 as a year where Safaricom paid out more in dividends than it generated in free cash flow — a signal that the Ethiopia investment was straining capital allocation decisions simultaneously.
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">06 · Recommendations</div>
+            <h2>CFO-level actions from the SQL findings</h2>
+            <ul class="reco-list">
+              <li>Separate M-PESA reporting from telecoms reporting in internal planning models. The two businesses have different growth rates, cost structures, and capital requirements. Managing them as one unit obscures strategic allocation decisions.</li>
+              <li>Exclude the Ethiopia IAS 29 hyperinflation gain from any FY2023 performance-linked compensation or bonus calculations. The gain is an accounting artifact, not operating performance. Using reported figures rewards the accounting team, not the business team.</li>
+              <li>Model the Ethiopia operation separately in capex forecasting. Including Ethiopia capex in the group capex model will systematically overstate future capex requirements for the Kenyan business — which is the cash-generative core of the group.</li>
+              <li>Review the dividend policy in light of the FY2022 FCF coverage ratio. A payout ratio above 100% of FCF is sustainable for one year but signals that future dividend growth must be funded by debt or capex reduction — both of which have strategic implications.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-4">
+
+          <div class="cs-sidebar-card">
+            <h4>Project Preview</h4>
+            <div class="cs-icon-hero">
+              <i class="fas fa-building"></i>
+              <span>Safaricom SQL Financial Analysis</span>
+            </div>
+            <p style="font-size:13.5px;color:var(--text-muted);margin:14px 0 0;line-height:1.6;">Full SQL scripts, view definitions, data_notes documentation, and query results available on GitHub.</p>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <div style="text-align:center;padding:8px 0 16px;">
+              <div style="font-family:var(--font-display);font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1;">9.6</div>
+              <div style="font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-top:6px;">Independent Rating / 10</div>
+            </div>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Data Source</h4>
+            <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;">
+              <i class="fas fa-shield-check" style="color:var(--gold);font-size:16px;margin-top:3px;"></i>
+              <div>
+                <div style="font-weight:600;font-size:14px;color:var(--charcoal);">Ernst & Young Audited</div>
+                <div style="font-size:13px;color:var(--text-muted);">Primary source — not estimated data</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <i class="fas fa-balance-scale" style="color:var(--gold);font-size:16px;margin-top:3px;"></i>
+              <div>
+                <div style="font-weight:600;font-size:14px;color:var(--charcoal);">IFRS-Adjusted</div>
+                <div style="font-size:13px;color:var(--text-muted);">Consistent accounting basis across all 10 years</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>SQL Techniques</h4>
+            <span class="tool-tag">PostgreSQL</span>
+            <span class="tool-tag">CREATE VIEW</span>
+            <span class="tool-tag">LAG() Window Function</span>
+            <span class="tool-tag">NULLIF / DIVIDE</span>
+            <span class="tool-tag">CTE</span>
+            <span class="tool-tag">Multi-table JOINs</span>
+            <span class="tool-tag">CASE WHEN</span>
+            <span class="tool-tag">ROUND()</span>
+            <span class="tool-tag">Subqueries</span>
+            <span class="tool-tag">data_notes Table</span>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Skills Demonstrated</h4>
+            <span class="skill-pill">Financial SQL</span>
+            <span class="skill-pill">IFRS Accounting</span>
+            <span class="skill-pill">Database Design</span>
+            <span class="skill-pill">Analytical Views</span>
+            <span class="skill-pill">Anomaly Detection</span>
+            <span class="skill-pill">Data Lineage</span>
+            <span class="skill-pill">CFO-Level Thinking</span>
+            <span class="skill-pill">Economic Analysis</span>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Project Links</h4>
+            <a class="cs-link-item" href="https://github.com/Carl-ctrl-design/safaricom_sql_financial_analysis" target="_blank" rel="noopener">
+              <i class="fa-brands fa-github"></i> GitHub Repository
+            </a>
+          </div>
+
+          <div class="cs-sidebar-card" style="background:var(--charcoal);border-color:transparent;">
+            <h4 style="color:#fff;">About Carlton Waiti</h4>
+            <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin:0 0 16px;">Economics-trained Data Analyst. This project applies financial economics depth that goes beyond standard SQL portfolio work. Available for remote roles.</p>
+            <a class="btn-gold" href="../index.html#contacts" style="font-size:13px;padding:10px 18px;">Get In Touch <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-bottom-nav">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <a class="btn-outline-gold" href="executive-dashboard.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> Previous: Olist Power BI</a>
+        <a class="btn-gold" href="safaricom-powerbi.html">Next: Safaricom Power BI Dashboard <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/vendor/jquery.js"></script>
+  <script src="../assets/js/vendor/bootstrap.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

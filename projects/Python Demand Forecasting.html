@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Demand Forecasting | Carlton Waiti — In Progress</title>
+  <meta name="description" content="Carlton Waiti's Python Demand Forecasting project — Pandas, Matplotlib, Jupyter Notebook, Superstore dataset. Time-series forecasting to improve inventory planning. Currently in progress.">
+  <meta name="author" content="Carlton Waiti">
+  <meta property="og:title" content="Python Demand Forecasting | Carlton Waiti">
+  <meta property="og:type" content="article">
+  <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/man.jpg">
+  <link rel="stylesheet" href="../assets/css/vendor/fontawesome.css">
+  <link rel="stylesheet" href="../assets/css/vendor/animate.min.css">
+  <link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:#C9A84C; --gold-light:#E8C96A; --gold-dim:rgba(201,168,76,0.14);
+      --charcoal:#1C1C1E; --off-white:#F8F6F1; --text-muted:#6B6B72;
+      --border:rgba(201,168,76,0.22); --card-bg:#FFFFFF;
+      --font-display:'Playfair Display',Georgia,serif;
+      --font-body:'DM Sans',system-ui,sans-serif;
+      --radius:14px; --radius-lg:20px;
+    }
+    body { font-family:var(--font-body)!important; font-size:17px!important; color:var(--charcoal); background:#fff; }
+    h1,h2,h3,h4 { font-family:var(--font-display)!important; }
+    .tmp-header-area-start { border-bottom:1px solid var(--border); background:rgba(255,255,255,0.97)!important; backdrop-filter:blur(12px); }
+    .tmp-header-area-start .header-content { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .tmp-header-area-start .logo { display:flex; align-items:center; flex-shrink:0; }
+    .tmp-header-area-start .logo img { max-width:200px; max-height:62px; height:auto; object-fit:contain; }
+    .tmp-mainmenu-nav { flex:1; display:flex; justify-content:center; }
+    .tmp-mainmenu { display:flex; align-items:center; gap:28px; list-style:none; margin:0; padding:0; }
+    .tmp-mainmenu li a { font-size:15px; font-weight:500; text-decoration:none; color:var(--charcoal); transition:color 0.2s; }
+    .tmp-mainmenu li a:hover { color:var(--gold); }
+    .tmp-header-right { flex-shrink:0; display:flex; align-items:center; }
+    .btn-back { display:inline-flex; align-items:center; gap:8px; padding:10px 22px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:14px; font-weight:500; border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; font-family:var(--font-body); transition:all 0.22s; }
+    .btn-back:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* HERO — muted for in-progress */
+    .cs-hero { padding:110px 0 60px; background:var(--off-white); border-bottom:1px solid var(--border); }
+    .cs-breadcrumb { font-size:13px; color:var(--text-muted); margin-bottom:18px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .cs-breadcrumb a { color:var(--gold); text-decoration:none; }
+    .cs-breadcrumb span { opacity:0.5; }
+    .cs-hero h1 { font-size:clamp(2.1rem,5vw,3.3rem); color:var(--charcoal); line-height:1.15; margin-bottom:20px; }
+    .cs-meta-pill { display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); font-size:14px; color:var(--charcoal); }
+    .cs-meta-pill i { color:var(--gold); font-size:13px; }
+    .progress-badge-hero { display:inline-flex; align-items:center; gap:10px; padding:12px 24px; border-radius:999px; background:rgba(100,100,120,0.08); border:1px solid rgba(100,100,120,0.2); font-size:15px; font-weight:700; color:var(--text-muted); }
+    .gold-divider { width:56px; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:2px; margin:12px 0 24px; }
+
+    /* Progress banner */
+    .progress-banner { background:linear-gradient(135deg,var(--charcoal),#2A2A2D); border-radius:var(--radius-lg); padding:28px 32px; margin-bottom:40px; display:flex; gap:20px; align-items:flex-start; }
+    .progress-icon { width:48px; height:48px; border-radius:14px; background:var(--gold-dim); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:20px; flex-shrink:0; }
+    .progress-text h4 { color:#fff; font-size:1.05rem; margin-bottom:6px; }
+    .progress-text p { color:rgba(255,255,255,0.6); font-size:14px; line-height:1.65; margin:0; }
+
+    /* Progress tracker */
+    .progress-tracker { display:flex; flex-direction:column; gap:0; margin:20px 0; }
+    .progress-step { display:flex; gap:16px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--border); }
+    .progress-step:last-child { border-bottom:none; }
+    .ps-status { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; margin-top:2px; }
+    .ps-done { background:rgba(34,197,94,0.15); color:#22c55e; border:1px solid rgba(34,197,94,0.3); }
+    .ps-active { background:var(--gold-dim); color:var(--gold); border:1px solid var(--border); }
+    .ps-pending { background:rgba(100,100,120,0.08); color:var(--text-muted); border:1px solid rgba(100,100,120,0.15); }
+    .ps-body { flex:1; }
+    .ps-title { font-weight:600; font-size:15px; color:var(--charcoal); margin-bottom:3px; }
+    .ps-desc { font-size:14px; color:var(--text-muted); line-height:1.6; margin:0; }
+
+    .cs-body { padding:72px 0 96px; background:#fff; }
+    .cs-block { margin-bottom:48px; }
+    .cs-block-label { font-size:11.5px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .cs-block h2 { font-size:1.7rem; color:var(--charcoal); margin-bottom:16px; line-height:1.25; }
+    .cs-block p { font-size:17px; color:var(--text-muted); line-height:1.85; margin-bottom:14px; }
+    .cs-highlight { border-left:3px solid var(--gold); padding:18px 22px; background:var(--off-white); border-radius:0 var(--radius) var(--radius) 0; margin:20px 0; font-size:17px; color:var(--charcoal); line-height:1.75; }
+
+    /* Method steps */
+    .method-steps { display:flex; flex-direction:column; gap:14px; margin-top:16px; }
+    .method-step { display:flex; gap:16px; background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; }
+    .ms-num { font-family:var(--font-display); font-size:1.4rem; font-weight:700; color:var(--gold); flex-shrink:0; width:32px; line-height:1.2; }
+    .ms-body { flex:1; }
+    .ms-title { font-weight:600; font-size:16px; color:var(--charcoal); margin-bottom:5px; }
+    .ms-desc { font-size:14.5px; color:var(--text-muted); line-height:1.65; margin:0; }
+
+    /* Python code block */
+    .py-block { background:var(--charcoal); border-radius:var(--radius); padding:24px 22px; margin:20px 0; overflow-x:auto; }
+    .py-block pre { margin:0; color:rgba(255,255,255,0.88); font-family:'Courier New',monospace; font-size:13.5px; line-height:1.75; white-space:pre-wrap; }
+    .py-comment { color:rgba(201,168,76,0.75); }
+    .py-keyword { color:#79B8FF; }
+    .py-string { color:#9ECB90; }
+    .py-fn { color:#B392F0; }
+
+    /* Why Python section */
+    .why-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+    .why-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius); padding:18px 18px; }
+    .why-icon { font-size:22px; color:var(--gold); margin-bottom:10px; }
+    .why-title { font-weight:600; font-size:15px; color:var(--charcoal); margin-bottom:6px; }
+    .why-desc { font-size:13.5px; color:var(--text-muted); line-height:1.6; margin:0; }
+
+    .cs-sidebar-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px 24px; margin-bottom:20px; }
+    .cs-sidebar-card h4 { font-size:1rem; color:var(--charcoal); margin-bottom:14px; }
+    .tool-tag { display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500; padding:5px 12px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; }
+    .skill-pill { display:inline-block; font-size:12.5px; padding:5px 13px; border-radius:999px; background:var(--gold-dim); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; font-weight:500; }
+    .cs-link-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); font-size:15px; color:var(--charcoal); text-decoration:none; transition:color 0.2s; }
+    .cs-link-item:last-child { border-bottom:none; padding-bottom:0; }
+    .cs-link-item:hover { color:var(--gold); }
+    .cs-link-item i { color:var(--gold); width:18px; text-align:center; }
+
+    .cs-icon-hero { width:100%; aspect-ratio:16/9; background:var(--off-white); border-radius:var(--radius); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px; }
+    .cs-icon-hero i { font-size:4rem; color:var(--text-muted); }
+    .cs-icon-hero span { font-family:var(--font-display); color:var(--text-muted); font-size:1rem; text-align:center; padding:0 20px; }
+
+    .cs-bottom-nav { background:var(--off-white); border-top:1px solid var(--border); padding:40px 0; }
+    .btn-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:var(--charcoal); color:#fff; font-size:15px; font-weight:500; font-family:var(--font-body); border:none; text-decoration:none; transition:all 0.25s; }
+    .btn-gold:hover { background:var(--gold); color:var(--charcoal); transform:translateY(-1px); }
+    .btn-outline-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:15px; font-weight:500; font-family:var(--font-body); border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; transition:all 0.25s; }
+    .btn-outline-gold:hover { border-color:var(--gold); color:var(--gold); }
+
+    @media(max-width:991px) {
+      .cs-hero { padding:90px 0 44px; }
+      .why-grid { grid-template-columns:1fr; }
+      .progress-banner { flex-direction:column; }
+      .tmp-header-area-start .logo img { max-width:150px; max-height:52px; }
+    }
+    @media(max-width:576px) {
+      .cs-hero h1 { font-size:1.9rem; }
+      .tmp-header-area-start .logo img { max-width:130px; max-height:44px; }
+    }
+  </style>
+</head>
+<body class="tmp-white-version">
+
+  <header class="tmp-header-area-start header-one header--sticky header--transparent">
+    <div class="container"><div class="row"><div class="col-lg-12">
+      <div class="header-content">
+        <div class="logo"><a href="../index.html"><img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti Portfolio"></a></div>
+        <nav class="tmp-mainmenu-nav d-none d-xl-block">
+          <ul class="tmp-mainmenu">
+            <li><a href="../index.html#home">Home</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#contacts">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="tmp-header-right">
+          <a class="btn-back d-none d-xl-flex" href="index.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> All Projects</a>
+        </div>
+      </div>
+    </div></div></div>
+  </header>
+
+  <section class="cs-hero">
+    <div class="container">
+      <div class="cs-breadcrumb">
+        <a href="../index.html">Home</a><span>/</span>
+        <a href="index.html">Projects</a><span>/</span>
+        <span>Python Demand Forecasting</span>
+      </div>
+      <div class="row align-items-end">
+        <div class="col-lg-8">
+          <span style="font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:14px;">In Progress · Python · Pandas · Forecasting</span>
+          <h1>Python Demand<br>Forecasting</h1>
+          <div class="gold-divider"></div>
+          <p style="font-size:1.15rem;color:var(--text-muted);line-height:1.8;max-width:620px;margin:0 0 24px;">
+            Using Python — Pandas, Matplotlib, and Jupyter Notebook — to build a demand forecasting model from the Superstore dataset that helps businesses plan inventory, reduce stockouts, and avoid costly overstock situations.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="cs-meta-pill"><i class="fab fa-python"></i> Python</span>
+            <span class="cs-meta-pill"><i class="fas fa-table"></i> Pandas</span>
+            <span class="cs-meta-pill"><i class="fas fa-chart-line"></i> Matplotlib</span>
+            <span class="cs-meta-pill"><i class="fas fa-book-open"></i> Jupyter Notebook</span>
+          </div>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+          <div class="progress-badge-hero">⏳ In Progress</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-body">
+    <div class="container">
+      <div class="row g-5">
+
+        <div class="col-lg-8">
+
+          <!-- Progress banner -->
+          <div class="progress-banner">
+            <div class="progress-icon"><i class="fas fa-code"></i></div>
+            <div class="progress-text">
+              <h4>This project is actively being built</h4>
+              <p>The business problem, methodology, and Python approach are fully designed. Data cleaning and exploratory analysis are complete. Forecasting model implementation and visualization are in progress. Check the GitHub repository for the latest commit activity.</p>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">01 · Business Problem</div>
+            <h2>Can we forecast demand accurately enough to change inventory decisions?</h2>
+            <p>The Superstore dataset already revealed in the Excel analysis that the business has a significant seasonal demand pattern — Q4 spikes, category-specific peaks, and regional variation. The next question is whether that pattern is predictable enough to act on.</p>
+            <p>The business case is straightforward: every stockout during a demand peak is lost revenue. Every overstock between peaks is tied-up cash and write-down risk. A demand forecast that is "usefully accurate" — not perfect, but directionally reliable — changes both inventory and purchasing decisions.</p>
+            <div class="cs-highlight">
+              <strong>The honest framing:</strong> Forecasting is not about predicting the future precisely. It is about reducing the range of uncertainty enough to make better decisions. A forecast that narrows the inventory planning range from "we don't know" to "somewhere between X and 1.3X" is already valuable — even if it is never exactly right.
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">02 · Dataset</div>
+            <h2>Superstore dataset — building on the Excel analysis</h2>
+            <p>This project uses the same Superstore dataset as the Excel Sales Analysis, giving a direct before-and-after comparison: what the Excel dashboard revealed descriptively vs. what the Python forecasting model can project forward.</p>
+            <p>The dataset contains 9,994 order records with order dates, product categories, sub-categories, regions, quantities, and sales values. The time dimension (order date) is the key field that makes forecasting possible — it provides the historical demand signal the model learns from.</p>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">03 · Project Progress</div>
+            <h2>Where the project stands right now</h2>
+            <div class="progress-tracker">
+              <div class="progress-step">
+                <div class="ps-status ps-done"><i class="fas fa-check"></i></div>
+                <div class="ps-body">
+                  <div class="ps-title">Environment setup</div>
+                  <div class="ps-desc">Python environment configured, Jupyter Notebook running, Pandas and Matplotlib installed and tested</div>
+                </div>
+              </div>
+              <div class="progress-step">
+                <div class="ps-status ps-done"><i class="fas fa-check"></i></div>
+                <div class="ps-body">
+                  <div class="ps-title">Data loading and initial cleaning</div>
+                  <div class="ps-desc">Superstore CSV loaded into Pandas DataFrame, date columns parsed, null checks completed, data types confirmed</div>
+                </div>
+              </div>
+              <div class="progress-step">
+                <div class="ps-status ps-done"><i class="fas fa-check"></i></div>
+                <div class="ps-body">
+                  <div class="ps-title">Exploratory analysis</div>
+                  <div class="ps-desc">Sales aggregated by month, category, and region — seasonal patterns identified and visualized with Matplotlib. Q4 spike confirmed across multiple years.</div>
+                </div>
+              </div>
+              <div class="progress-step">
+                <div class="ps-status ps-active"><i class="fas fa-spinner fa-spin"></i></div>
+                <div class="ps-body">
+                  <div class="ps-title">Forecasting model — in progress</div>
+                  <div class="ps-desc">Currently building moving average and exponential smoothing baseline models. Evaluating forecast accuracy using holdout period RMSE before moving to more complex methods.</div>
+                </div>
+              </div>
+              <div class="progress-step">
+                <div class="ps-status ps-pending"><i class="fas fa-clock"></i></div>
+                <div class="ps-body">
+                  <div class="ps-title">Forecast visualization and interpretation</div>
+                  <div class="ps-desc">Will produce forecast charts with confidence intervals, category-level forecasts, and a plain-English interpretation of what each forecast means for inventory decisions</div>
+                </div>
+              </div>
+              <div class="progress-step">
+                <div class="ps-status ps-pending"><i class="fas fa-clock"></i></div>
+                <div class="ps-body">
+                  <div class="ps-title">Jupyter Notebook documentation and GitHub publish</div>
+                  <div class="ps-desc">Full notebook with markdown explanations, inline charts, and business interpretation — structured so a non-technical reader can follow the analysis</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">04 · Methodology</div>
+            <h2>How the forecasting model is being built</h2>
+            <div class="method-steps">
+              <div class="method-step">
+                <div class="ms-num">1</div>
+                <div class="ms-body">
+                  <div class="ms-title">Time-series aggregation</div>
+                  <div class="ms-desc">Aggregate daily order records into monthly totals using Pandas groupby and resample. Create separate time series for total demand, by-category demand, and by-region demand.</div>
+                </div>
+              </div>
+              <div class="method-step">
+                <div class="ms-num">2</div>
+                <div class="ms-body">
+                  <div class="ms-title">Decomposition — trend, seasonality, residual</div>
+                  <div class="ms-desc">Use statsmodels seasonal decomposition to separate the demand signal into its three components. This tells us how much of the Q4 spike is genuine seasonality vs. trend growth vs. random noise.</div>
+                </div>
+              </div>
+              <div class="method-step">
+                <div class="ms-num">3</div>
+                <div class="ms-body">
+                  <div class="ms-title">Baseline forecast — moving average</div>
+                  <div class="ms-desc">Build a simple 3-month moving average as the baseline. This is the "naive" model that more sophisticated methods need to beat. If a complex model can't beat a moving average, the complexity is not justified.</div>
+                </div>
+              </div>
+              <div class="method-step">
+                <div class="ms-num">4</div>
+                <div class="ms-body">
+                  <div class="ms-title">Improved forecast — exponential smoothing</div>
+                  <div class="ms-desc">Apply Holt-Winters exponential smoothing, which accounts for both trend and seasonality — a more appropriate method for the Superstore data where both are clearly present.</div>
+                </div>
+              </div>
+              <div class="method-step">
+                <div class="ms-num">5</div>
+                <div class="ms-body">
+                  <div class="ms-title">Accuracy evaluation — holdout period</div>
+                  <div class="ms-desc">Split the data: train on the first 3.5 years, test on the final 6 months. Compare RMSE for the moving average and exponential smoothing models to select the better performer.</div>
+                </div>
+              </div>
+              <div class="method-step">
+                <div class="ms-num">6</div>
+                <div class="ms-body">
+                  <div class="ms-title">Business interpretation</div>
+                  <div class="ms-desc">Translate forecast numbers into planning actions: what inventory level to hold in October to prepare for November-December peak, what safety stock to add for high-volatility categories.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sample code -->
+            <div style="margin-top:28px;">
+              <p style="font-size:15px;color:var(--text-muted);margin-bottom:12px;">Sample code — monthly aggregation and seasonal decomposition:</p>
+              <div class="py-block">
+                <pre><span class="py-comment"># Load and prepare the Superstore dataset</span>
+<span class="py-keyword">import</span> pandas <span class="py-keyword">as</span> pd
+<span class="py-keyword">import</span> matplotlib.pyplot <span class="py-keyword">as</span> plt
+<span class="py-keyword">from</span> statsmodels.tsa.seasonal <span class="py-keyword">import</span> seasonal_decompose
+
+<span class="py-comment"># Load data and parse dates</span>
+df = pd.<span class="py-fn">read_csv</span>(<span class="py-string">'superstore.csv'</span>, parse_dates=[<span class="py-string">'Order Date'</span>])
+df.<span class="py-fn">rename</span>(columns={<span class="py-string">'Order Date'</span>: <span class="py-string">'order_date'</span>,
+                    <span class="py-string">'Sales'</span>: <span class="py-string">'sales'</span>}, inplace=<span class="py-keyword">True</span>)
+
+<span class="py-comment"># Aggregate to monthly total sales</span>
+monthly = (df.<span class="py-fn">set_index</span>(<span class="py-string">'order_date'</span>)
+             [<span class="py-string">'sales'</span>]
+             .<span class="py-fn">resample</span>(<span class="py-string">'MS'</span>)  <span class="py-comment"># month start frequency</span>
+             .<span class="py-fn">sum</span>()
+             .<span class="py-fn">reset_index</span>())
+
+<span class="py-comment"># Seasonal decomposition</span>
+decomp = <span class="py-fn">seasonal_decompose</span>(
+    monthly.<span class="py-fn">set_index</span>(<span class="py-string">'order_date'</span>)[<span class="py-string">'sales'</span>],
+    model=<span class="py-string">'additive'</span>,
+    period=<span class="py-string">12</span>
+)
+
+<span class="py-comment"># Plot components: trend, seasonal, residual</span>
+decomp.<span class="py-fn">plot</span>()
+plt.<span class="py-fn">tight_layout</span>()
+plt.<span class="py-fn">show</span>()</pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">05 · Why Python for This</div>
+            <h2>What Python adds that Excel cannot</h2>
+            <div class="why-grid">
+              <div class="why-card">
+                <div class="why-icon"><i class="fas fa-calculator"></i></div>
+                <div class="why-title">Statistical forecasting models</div>
+                <div class="why-desc">Excel can compute moving averages but cannot natively implement Holt-Winters exponential smoothing with automatic seasonality detection. Python's statsmodels library handles this properly.</div>
+              </div>
+              <div class="why-card">
+                <div class="why-icon"><i class="fas fa-repeat"></i></div>
+                <div class="why-title">Reproducible, automated pipeline</div>
+                <div class="why-desc">A Python script can re-run the entire forecast with new data in seconds. Excel requires manual pivot table refresh and chart recreation. For ongoing demand planning, Python scales and Excel doesn't.</div>
+              </div>
+              <div class="why-card">
+                <div class="why-icon"><i class="fas fa-ruler-combined"></i></div>
+                <div class="why-title">Accuracy measurement</div>
+                <div class="why-desc">Python calculates RMSE, MAE, and MAPE automatically for model comparison. Excel would require manual formula construction across multiple sheets — error-prone and not scalable.</div>
+              </div>
+              <div class="why-card">
+                <div class="why-icon"><i class="fas fa-book-open"></i></div>
+                <div class="why-title">Documented analysis in Jupyter</div>
+                <div class="why-desc">Jupyter Notebook combines code, output, and written explanation in one document. This makes the analysis reviewable by both technical and non-technical stakeholders — essential for business use.</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-4">
+
+          <div class="cs-sidebar-card">
+            <h4>Project Status</h4>
+            <div class="cs-icon-hero">
+              <i class="fab fa-python"></i>
+              <span>Python Demand Forecasting — In Progress</span>
+            </div>
+            <p style="font-size:13.5px;color:var(--text-muted);margin:14px 0 0;line-height:1.6;">Follow progress on GitHub. The Jupyter Notebook will be published with full documentation when complete.</p>
+          </div>
+
+          <div class="cs-sidebar-card" style="background:rgba(100,100,120,0.06);border-color:rgba(100,100,120,0.15);">
+            <div style="text-align:center;padding:8px 0 12px;">
+              <div style="font-size:28px;margin-bottom:8px;">⏳</div>
+              <div style="font-family:var(--font-display);font-size:1rem;color:var(--charcoal);margin-bottom:4px;">In Progress</div>
+              <div style="font-size:13px;color:var(--text-muted);">Forecasting model in active development</div>
+            </div>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Technologies</h4>
+            <span class="tool-tag"><i class="fab fa-python" style="color:var(--gold);font-size:11px;"></i> Python 3</span>
+            <span class="tool-tag">Pandas</span>
+            <span class="tool-tag">Matplotlib</span>
+            <span class="tool-tag">Jupyter Notebook</span>
+            <span class="tool-tag">statsmodels</span>
+            <span class="tool-tag">NumPy</span>
+            <span class="tool-tag">Holt-Winters</span>
+            <span class="tool-tag">Seasonal Decompose</span>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Skills Being Built</h4>
+            <span class="skill-pill">Time-Series Analysis</span>
+            <span class="skill-pill">Demand Forecasting</span>
+            <span class="skill-pill">Python for Analytics</span>
+            <span class="skill-pill">Statistical Modeling</span>
+            <span class="skill-pill">Data Visualization</span>
+            <span class="skill-pill">Jupyter Notebooks</span>
+            <span class="skill-pill">Model Evaluation</span>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Related Completed Project</h4>
+            <a class="cs-link-item" href="retail-sales.html">
+              <i class="fas fa-arrow-right"></i> Excel Superstore Analysis — same dataset, descriptive
+            </a>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Project Links</h4>
+            <a class="cs-link-item" href="https://github.com/Carl-ctrl-design" target="_blank" rel="noopener">
+              <i class="fa-brands fa-github"></i> GitHub — check for latest commits
+            </a>
+          </div>
+
+          <div class="cs-sidebar-card" style="background:var(--charcoal);border-color:transparent;">
+            <h4 style="color:#fff;">While this builds...</h4>
+            <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin:0 0 16px;">The 5 completed projects — including a 9.8/10 rated Safaricom Power BI dashboard — are all live and fully documented.</p>
+            <a class="btn-gold" href="index.html" style="font-size:13px;padding:10px 18px;">View All Projects <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-bottom-nav">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <a class="btn-outline-gold" href="safaricom-powerbi.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> Previous: Safaricom Power BI</a>
+        <a class="btn-gold" href="index.html">All Projects <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/vendor/jquery.js"></script>
+  <script src="../assets/js/vendor/bootstrap.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

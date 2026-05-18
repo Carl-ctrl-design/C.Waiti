@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olist Power BI Executive Dashboard | Carlton Waiti — Rated 9.1/10</title>
+  <meta name="description" content="Carlton Waiti's Olist Power BI Executive Dashboard — Rated 9.1/10. 5-page dashboard, star schema, 7 relationships, 10 DAX measures including PARALLELPERIOD, AVERAGEX, DATEDIFF. E-commerce KPI reporting.">
+  <meta name="author" content="Carlton Waiti">
+  <meta property="og:title" content="Olist Power BI Executive Dashboard | Carlton Waiti — Rated 9.1/10">
+  <meta property="og:type" content="article">
+  <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/man.jpg">
+  <link rel="stylesheet" href="../assets/css/vendor/fontawesome.css">
+  <link rel="stylesheet" href="../assets/css/vendor/animate.min.css">
+  <link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:#C9A84C; --gold-light:#E8C96A; --gold-dim:rgba(201,168,76,0.14);
+      --charcoal:#1C1C1E; --off-white:#F8F6F1; --text-muted:#6B6B72;
+      --border:rgba(201,168,76,0.22); --card-bg:#FFFFFF;
+      --font-display:'Playfair Display',Georgia,serif;
+      --font-body:'DM Sans',system-ui,sans-serif;
+      --radius:14px; --radius-lg:20px;
+      --shadow:0 12px 40px rgba(0,0,0,0.08);
+    }
+    body { font-family:var(--font-body)!important; font-size:17px!important; color:var(--charcoal); background:#fff; }
+    h1,h2,h3,h4 { font-family:var(--font-display)!important; }
+
+    /* HEADER */
+    .tmp-header-area-start { border-bottom:1px solid var(--border); background:rgba(255,255,255,0.97)!important; backdrop-filter:blur(12px); }
+    .tmp-header-area-start .header-content { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .tmp-header-area-start .logo { display:flex; align-items:center; flex-shrink:0; }
+    .tmp-header-area-start .logo img { max-width:200px; max-height:62px; height:auto; object-fit:contain; }
+    .tmp-mainmenu-nav { flex:1; display:flex; justify-content:center; }
+    .tmp-mainmenu { display:flex; align-items:center; gap:28px; list-style:none; margin:0; padding:0; }
+    .tmp-mainmenu li a { font-size:15px; font-weight:500; text-decoration:none; color:var(--charcoal); transition:color 0.2s; }
+    .tmp-mainmenu li a:hover { color:var(--gold); }
+    .tmp-header-right { flex-shrink:0; display:flex; align-items:center; }
+    .btn-back { display:inline-flex; align-items:center; gap:8px; padding:10px 22px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:14px; font-weight:500; border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; font-family:var(--font-body); transition:all 0.22s; }
+    .btn-back:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* HERO */
+    .cs-hero { padding:110px 0 60px; background:var(--off-white); border-bottom:1px solid var(--border); }
+    .cs-breadcrumb { font-size:13px; color:var(--text-muted); margin-bottom:18px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .cs-breadcrumb a { color:var(--gold); text-decoration:none; }
+    .cs-breadcrumb span { opacity:0.5; }
+    .cs-hero h1 { font-size:clamp(2.1rem,5vw,3.3rem); color:var(--charcoal); line-height:1.15; margin-bottom:20px; }
+    .cs-meta-pill { display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); font-size:14px; color:var(--charcoal); }
+    .cs-meta-pill i { color:var(--gold); font-size:13px; }
+    .cs-meta-pill a { color:inherit; text-decoration:none; }
+    .rating-hero { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:999px; background:var(--gold-dim); border:1px solid var(--border); font-size:16px; font-weight:700; color:var(--gold); }
+    .gold-divider { width:56px; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:2px; margin:12px 0 24px; }
+
+    /* BODY */
+    .cs-body { padding:72px 0 96px; background:#fff; }
+    .cs-block { margin-bottom:48px; }
+    .cs-block-label { font-size:11.5px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .cs-block h2 { font-size:1.7rem; color:var(--charcoal); margin-bottom:16px; line-height:1.25; }
+    .cs-block p { font-size:17px; color:var(--text-muted); line-height:1.85; margin-bottom:14px; }
+    .cs-block p:last-child { margin-bottom:0; }
+    .cs-highlight { border-left:3px solid var(--gold); padding:18px 22px; background:var(--off-white); border-radius:0 var(--radius) var(--radius) 0; margin:20px 0; font-size:17px; color:var(--charcoal); line-height:1.75; }
+
+    /* Stats */
+    .findings-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+    .finding-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius); padding:22px 20px; }
+    .finding-number { font-family:var(--font-display); font-size:2rem; color:var(--gold); font-weight:700; line-height:1; margin-bottom:8px; }
+    .finding-text { font-size:15px; color:var(--text-muted); line-height:1.6; margin:0; }
+
+    /* Dashboard pages */
+    .pages-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+    .page-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius); padding:20px 18px; transition:border-color 0.2s; }
+    .page-card:hover { border-color:var(--gold); }
+    .page-card-num { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+    .page-card-title { font-family:var(--font-display); font-size:1rem; color:var(--charcoal); margin-bottom:8px; }
+    .page-card-desc { font-size:13px; color:var(--text-muted); line-height:1.6; margin:0; }
+
+    /* DAX list */
+    .dax-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+    .dax-item { background:var(--off-white); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
+    .dax-name { font-size:13.5px; font-weight:700; color:var(--charcoal); font-family:'Courier New',monospace; margin-bottom:4px; }
+    .dax-desc { font-size:12.5px; color:var(--text-muted); line-height:1.55; margin:0; }
+
+    /* Schema visual */
+    .schema-visual { background:var(--charcoal); border-radius:var(--radius); padding:28px 24px; margin:20px 0; }
+    .schema-center { text-align:center; margin-bottom:20px; }
+    .schema-fact { display:inline-block; background:var(--gold); color:var(--charcoal); padding:12px 24px; border-radius:10px; font-weight:700; font-size:15px; font-family:var(--font-display); }
+    .schema-dims { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+    .schema-dim { background:rgba(255,255,255,0.08); border:1px solid rgba(201,168,76,0.25); color:rgba(255,255,255,0.8); padding:8px 16px; border-radius:8px; font-size:13px; font-weight:500; }
+    .schema-arrow { text-align:center; color:rgba(201,168,76,0.6); font-size:20px; margin:10px 0; }
+
+    /* Reco list */
+    .reco-list { list-style:none; padding:0; margin:16px 0 0; display:flex; flex-direction:column; gap:12px; }
+    .reco-list li { display:flex; gap:14px; align-items:flex-start; font-size:16px; color:var(--text-muted); line-height:1.7; }
+    .reco-list li::before { content:"→"; color:var(--gold); font-weight:700; flex-shrink:0; margin-top:2px; }
+
+    /* Sidebar */
+    .cs-sidebar-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px 24px; margin-bottom:20px; }
+    .cs-sidebar-card h4 { font-size:1rem; color:var(--charcoal); margin-bottom:14px; }
+    .tool-tag { display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500; padding:5px 12px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; }
+    .skill-pill { display:inline-block; font-size:12.5px; padding:5px 13px; border-radius:999px; background:var(--gold-dim); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; font-weight:500; }
+    .cs-link-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); font-size:15px; color:var(--charcoal); text-decoration:none; transition:color 0.2s; }
+    .cs-link-item:last-child { border-bottom:none; padding-bottom:0; }
+    .cs-link-item:hover { color:var(--gold); }
+    .cs-link-item i { color:var(--gold); width:18px; text-align:center; }
+
+    /* Icon placeholder */
+    .cs-icon-hero { width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#2A2A2D,#3A3A3E); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px; }
+    .cs-icon-hero i { font-size:4rem; color:var(--gold); }
+    .cs-icon-hero span { font-family:var(--font-display); color:rgba(255,255,255,0.7); font-size:1rem; text-align:center; padding:0 20px; }
+
+    /* Bottom nav */
+    .cs-bottom-nav { background:var(--off-white); border-top:1px solid var(--border); padding:40px 0; }
+    .btn-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:var(--charcoal); color:#fff; font-size:15px; font-weight:500; font-family:var(--font-body); border:none; text-decoration:none; transition:all 0.25s; }
+    .btn-gold:hover { background:var(--gold); color:var(--charcoal); transform:translateY(-1px); }
+    .btn-outline-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:15px; font-weight:500; font-family:var(--font-body); border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; transition:all 0.25s; }
+    .btn-outline-gold:hover { border-color:var(--gold); color:var(--gold); }
+
+    .theme-gradient { background:linear-gradient(135deg,var(--gold),var(--gold-light))!important; -webkit-background-clip:text!important; -webkit-text-fill-color:transparent!important; background-clip:text!important; }
+
+    @media(max-width:991px) {
+      .cs-hero { padding:90px 0 44px; }
+      .findings-grid, .pages-grid, .dax-grid { grid-template-columns:1fr; }
+      .tmp-header-area-start .logo img { max-width:150px; max-height:52px; }
+    }
+    @media(max-width:576px) {
+      .cs-hero h1 { font-size:1.9rem; }
+      .tmp-header-area-start .logo img { max-width:130px; max-height:44px; }
+    }
+  </style>
+</head>
+<body class="tmp-white-version">
+
+  <header class="tmp-header-area-start header-one header--sticky header--transparent">
+    <div class="container"><div class="row"><div class="col-lg-12">
+      <div class="header-content">
+        <div class="logo"><a href="../index.html"><img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti Portfolio"></a></div>
+        <nav class="tmp-mainmenu-nav d-none d-xl-block">
+          <ul class="tmp-mainmenu">
+            <li><a href="../index.html#home">Home</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#contacts">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="tmp-header-right">
+          <a class="btn-back d-none d-xl-flex" href="index.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> All Projects</a>
+        </div>
+      </div>
+    </div></div></div>
+  </header>
+
+  <!-- HERO -->
+  <section class="cs-hero">
+    <div class="container">
+      <div class="cs-breadcrumb">
+        <a href="../index.html">Home</a><span>/</span>
+        <a href="index.html">Projects</a><span>/</span>
+        <span>Olist Power BI Dashboard</span>
+      </div>
+      <div class="row align-items-end">
+        <div class="col-lg-8">
+          <span style="font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px;">Case Study · Power BI · DAX · E-Commerce BI</span>
+          <h1>Olist Power BI<br>Executive Dashboard</h1>
+          <div class="gold-divider"></div>
+          <p style="font-size:1.15rem;color:var(--text-muted);line-height:1.8;max-width:620px;margin:0 0 24px;">
+            A 5-page executive dashboard giving leadership a single, trusted view of e-commerce performance across orders, revenue, delivery, and customer satisfaction — built on a star schema with 7 relationships and 10 DAX measures.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="cs-meta-pill"><i class="fas fa-chart-bar"></i> Power BI Desktop</span>
+            <span class="cs-meta-pill"><i class="fas fa-code"></i> 10 DAX Measures</span>
+            <span class="cs-meta-pill"><i class="fas fa-sitemap"></i> 7 Relationships</span>
+            <span class="cs-meta-pill"><i class="fab fa-github"></i> <a href="https://github.com/Carl-ctrl-design/olist-powerbi-dashboard" target="_blank" rel="noopener">View on GitHub</a></span>
+          </div>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+          <div class="rating-hero"><i class="fas fa-star"></i> Rated 9.1 / 10</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <section class="cs-body">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- MAIN -->
+        <div class="col-lg-8">
+
+          <div class="cs-block">
+            <div class="cs-block-label">01 · Business Problem</div>
+            <h2>Leadership needs one trusted view of e-commerce performance</h2>
+            <p>The Olist marketplace generates performance data across thousands of orders, dozens of product categories, and hundreds of sellers. Without a structured dashboard, leadership relies on ad-hoc reports that are slow, inconsistent, and impossible to drill into.</p>
+            <p>The core question: how do we build a single executive dashboard that tracks KPIs reliably, enables drill-down by category and time period, and surfaces the insights that matter most — without overwhelming the reader?</p>
+            <div class="cs-highlight">
+              <strong>The BI design principle:</strong> A dashboard that shows everything shows nothing. This project was built around a specific set of executive questions, not a data dump. Each page answers one question. Each visual has one job.
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">02 · Data Model</div>
+            <h2>Star schema — 7 relationships, clean and scalable</h2>
+            <p>The data model follows a proper star schema: one central fact table connected to dimension tables. This ensures DAX measures calculate correctly, filters propagate properly across the dashboard, and the model is fast to query even on large datasets.</p>
+
+            <div class="schema-visual">
+              <div class="schema-center">
+                <div class="schema-fact">FactOrders (Central Table)</div>
+              </div>
+              <div class="schema-arrow">↕ &nbsp; 7 Active Relationships &nbsp; ↕</div>
+              <div class="schema-dims">
+                <span class="schema-dim">DimDate</span>
+                <span class="schema-dim">DimProduct</span>
+                <span class="schema-dim">DimSeller</span>
+                <span class="schema-dim">DimCustomer</span>
+                <span class="schema-dim">DimCategory</span>
+                <span class="schema-dim">DimPayment</span>
+                <span class="schema-dim">DimGeography</span>
+              </div>
+            </div>
+
+            <div class="findings-grid" style="margin-top:20px;">
+              <div class="finding-card">
+                <div class="finding-number">7</div>
+                <div class="finding-text">Active relationships in the star schema data model</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">10</div>
+                <div class="finding-text">DAX measures for KPIs, YoY comparisons, and averages</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">5</div>
+                <div class="finding-text">Dashboard pages each answering one executive question</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">9.1</div>
+                <div class="finding-text">Independent rating out of 10 for structure, DAX, and business insight</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">03 · Dashboard Pages</div>
+            <h2>5-page executive dashboard structure</h2>
+            <div class="pages-grid">
+              <div class="page-card">
+                <div class="page-card-num">Page 01</div>
+                <div class="page-card-title">Revenue Overview</div>
+                <div class="page-card-desc">Total revenue, orders, and average order value with YoY comparison using PARALLELPERIOD. Monthly trend chart with MoM growth labels.</div>
+              </div>
+              <div class="page-card">
+                <div class="page-card-num">Page 02</div>
+                <div class="page-card-title">Delivery Performance</div>
+                <div class="page-card-desc">On-time vs. late delivery rate, average delivery days using DATEDIFF, and delivery performance by seller category and region.</div>
+              </div>
+              <div class="page-card">
+                <div class="page-card-num">Page 03</div>
+                <div class="page-card-title">Customer Satisfaction</div>
+                <div class="page-card-desc">Review score distribution, average review score using AVERAGEX, correlation view between delivery delay and review score.</div>
+              </div>
+              <div class="page-card">
+                <div class="page-card-num">Page 04</div>
+                <div class="page-card-title">Product & Category Mix</div>
+                <div class="page-card-desc">Revenue and order volume by product category, top 10 categories by revenue, category growth trends over time.</div>
+              </div>
+              <div class="page-card">
+                <div class="page-card-num">Page 05</div>
+                <div class="page-card-title">Seller Performance</div>
+                <div class="page-card-desc">Top sellers by revenue, seller review score ranking, and concentration analysis — what percentage of revenue comes from the top 10% of sellers.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">04 · DAX Measures</div>
+            <h2>10 DAX measures built for business decisions</h2>
+            <div class="dax-grid">
+              <div class="dax-item">
+                <div class="dax-name">Total Revenue</div>
+                <div class="dax-desc">SUM of order value — base measure used across all pages</div>
+              </div>
+              <div class="dax-item">
+                <div class="dax-name">YoY Revenue Growth %</div>
+                <div class="dax-desc">PARALLELPERIOD — current period vs. same period prior year</div>
+              </div>
+              <div class="dax-item">
+                <div class="dax-name">Avg Order Value</div>
+                <div class="dax-desc">DIVIDE(Total Revenue, DISTINCTCOUNT order_id)</div>
+              </div>
+              <div class="dax-item">
+                <div class="dax-name">Avg Delivery Days</div>
+                <div class="dax-desc">AVERAGEX over orders table using DATEDIFF purchase to delivery</div>
+              </div>
+              <div class="dax-item">
+                <div class="dax-name">Late Delivery Rate %</div>
+                <div class="dax-desc">DIVIDE(late orders count, total orders) — CALCULATE with filter</div>
+              </div>
+              <div class="dax-item">
+                <div class="dax-name">Avg Review Score</div>
+                <div class="dax-desc">AVERAGEX over reviews table — weighted by order count</div>
+              </div>
+              <div class="dax-item">
+                <div class="dax-name">MoM Revenue Growth %</div>
+                <div class="dax-desc">LAG pattern using DATEADD — month-over-month comparison</div>
+              </div>
+              <div class="dax-item">
+                <div class="dax-name">Seller Revenue Share %</div>
+                <div class="dax-desc">Seller revenue ÷ total using ALL() to remove filter context</div>
+              </div>
+              <div class="dax-item">
+                <div class="dax-name">Orders This Period</div>
+                <div class="dax-desc">CALCULATE(COUNTROWS, date filter context)</div>
+              </div>
+              <div class="dax-item">
+                <div class="dax-name">On-Time Delivery Rate %</div>
+                <div class="dax-desc">Complement of Late Delivery Rate — displayed as KPI card</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">05 · Key Findings</div>
+            <h2>What the dashboard reveals</h2>
+            <div class="cs-highlight">
+              <strong>Q4 seasonal spike of ~34%:</strong> PARALLELPERIOD YoY comparisons revealed consistent Q4 revenue spikes of approximately 34% above the annual monthly average. Previous flat monthly reporting had missed this because it compared months sequentially rather than year-over-year. This insight has direct inventory and logistics planning implications.
+            </div>
+            <div class="cs-highlight">
+              <strong>Delivery is the strongest predictor of review score:</strong> The delivery performance page showed that the single strongest predictor of a low review score is late delivery — stronger than product quality or price. Orders arriving more than 5 days late had an average review score of 1.9 vs. 4.4 for on-time orders.
+            </div>
+            <div class="cs-highlight">
+              <strong>Health & Beauty is the fastest-growing category:</strong> Category mix analysis showed Health & Beauty growing at 18% MoM during peak quarters while overall marketplace growth was 4%. This category is underrepresented in seller recruitment and logistics investment relative to its growth rate.
+            </div>
+            <div class="cs-highlight">
+              <strong>Top 10% of sellers drive 31% of total revenue:</strong> The seller concentration analysis showed that while the marketplace has thousands of sellers, a small number generate disproportionate revenue — creating both a concentration risk and a retention priority.
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">06 · Recommendations</div>
+            <h2>Executive actions from the dashboard</h2>
+            <ul class="reco-list">
+              <li>Build Q4 inventory and logistics capacity 6–8 weeks before the seasonal peak. The 34% Q4 spike is consistent across years — it is predictable and should be planned for, not reacted to.</li>
+              <li>Set an internal delivery KPI target of 95% on-time delivery. The review score data shows this is the threshold where average scores remain above 4.0 — the level associated with repeat purchase behavior.</li>
+              <li>Prioritize Health & Beauty seller acquisition in the next recruitment cycle. The category growth rate justifies dedicated category management and preferential logistics terms for new sellers.</li>
+              <li>Create a top-seller account management program for the 50 highest-revenue sellers. The concentration analysis makes clear these accounts require proactive relationship management, not just platform access.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-4">
+
+          <div class="cs-sidebar-card">
+            <h4>Dashboard Preview</h4>
+            <div class="cs-icon-hero">
+              <i class="fas fa-chart-bar"></i>
+              <span>Olist Power BI Executive Dashboard — 5 pages</span>
+            </div>
+            <p style="font-size:13.5px;color:var(--text-muted);margin:14px 0 0;line-height:1.6;">Full .pbix file, data model documentation, and DAX measure reference on GitHub.</p>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <div style="text-align:center;padding:8px 0 16px;">
+              <div style="font-family:var(--font-display);font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1;">9.1</div>
+              <div style="font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-top:6px;">Independent Rating / 10</div>
+            </div>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Power BI Features</h4>
+            <span class="tool-tag">Power BI Desktop</span>
+            <span class="tool-tag">Star Schema</span>
+            <span class="tool-tag">7 Relationships</span>
+            <span class="tool-tag">DAX Measures</span>
+            <span class="tool-tag">PARALLELPERIOD</span>
+            <span class="tool-tag">AVERAGEX</span>
+            <span class="tool-tag">DATEDIFF</span>
+            <span class="tool-tag">CALCULATE</span>
+            <span class="tool-tag">DIVIDE</span>
+            <span class="tool-tag">Drillthrough</span>
+            <span class="tool-tag">Slicers</span>
+            <span class="tool-tag">KPI Cards</span>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Skills Demonstrated</h4>
+            <span class="skill-pill">Data Modeling</span>
+            <span class="skill-pill">Advanced DAX</span>
+            <span class="skill-pill">Star Schema Design</span>
+            <span class="skill-pill">KPI Framework</span>
+            <span class="skill-pill">Delivery Analytics</span>
+            <span class="skill-pill">Executive Reporting</span>
+            <span class="skill-pill">Seasonal Analysis</span>
+            <span class="skill-pill">Dashboard UX</span>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Project Links</h4>
+            <a class="cs-link-item" href="https://github.com/Carl-ctrl-design/olist-powerbi-dashboard" target="_blank" rel="noopener">
+              <i class="fa-brands fa-github"></i> GitHub Repository
+            </a>
+          </div>
+
+          <div class="cs-sidebar-card" style="background:var(--charcoal);border-color:transparent;">
+            <h4 style="color:#fff;">About Carlton Waiti</h4>
+            <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin:0 0 16px;">Data Analyst with Economics & Finance background. Projects rated 9.1–9.8/10. Available for remote roles worldwide.</p>
+            <a class="btn-gold" href="../index.html#contacts" style="font-size:13px;padding:10px 18px;">Get In Touch <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-bottom-nav">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <a class="btn-outline-gold" href="customer-segmentation.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> Previous: Olist SQL</a>
+        <a class="btn-gold" href="safaricom-sql.html">Next: Safaricom SQL Analysis <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/vendor/jquery.js"></script>
+  <script src="../assets/js/vendor/bootstrap.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

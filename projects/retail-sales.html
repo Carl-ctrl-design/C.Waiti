@@ -1,367 +1,379 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <!-- Basic Meta -->
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO -->
-  <title>Retail Sales Performance Analysis | Carlton Waiti</title>
-  <meta name="description" content="Retail Sales Performance Analysis project by Carlton Waiti. Explore insights on sales trends, revenue performance, customer behavior, and business recommendations using data analysis and visualization.">
+  <title>Excel Superstore Sales Analysis | Carlton Waiti — Data Analyst</title>
+  <meta name="description" content="Carlton Waiti's Excel Superstore Sales Analysis — 9,994 rows, PivotTables, KPI dashboard. Identifies which product categories and regions drive profit vs destroy margin. Business analytics case study.">
   <meta name="author" content="Carlton Waiti">
-  <meta name="keywords" content="Retail Sales Performance Analysis, Carlton Waiti, Data Analysis Project, Sales Dashboard, Business Intelligence, Excel, SQL, Power BI, Data Visualization, Portfolio Project">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Retail Sales Performance Analysis | Carlton Waiti">
-  <meta property="og:description" content="Explore Carlton Waiti's retail sales analysis project featuring business insights, revenue trends, and data-driven recommendations.">
+  <meta property="og:title" content="Excel Superstore Sales Analysis | Carlton Waiti">
+  <meta property="og:description" content="9,994-row retail dataset. Identified that Furniture's discount strategy eroded margins despite high revenue. Tables sub-category had negative profit margin.">
   <meta property="og:type" content="article">
-  <meta property="og:image" content="../assets/images/projects/retail-sales-cover.jpg">
-
-  <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/man.jpg">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="../assets/css/vendor/fontawesome.css">
-  <link rel="stylesheet" href="../assets/css/plugins/swiper.css">
-  <link rel="stylesheet" href="../assets/css/plugins/odometer.css">
   <link rel="stylesheet" href="../assets/css/vendor/animate.min.css">
   <link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* =========================
-       HEADER FIX
-    ========================= */
-    .tmp-header-area-start .header-content{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      min-height:84px;
+    :root {
+      --gold:#C9A84C; --gold-light:#E8C96A; --gold-dim:rgba(201,168,76,0.14);
+      --charcoal:#1C1C1E; --off-white:#F8F6F1; --text-muted:#6B6B72;
+      --border:rgba(201,168,76,0.22); --card-bg:#FFFFFF;
+      --font-display:'Playfair Display',Georgia,serif;
+      --font-body:'DM Sans',system-ui,sans-serif;
+      --radius:14px; --radius-lg:20px;
+      --shadow:0 12px 40px rgba(0,0,0,0.08);
     }
+    body { font-family:var(--font-body)!important; font-size:17px!important; color:var(--charcoal); background:#fff; }
+    h1,h2,h3,h4 { font-family:var(--font-display)!important; }
 
-    .tmp-header-area-start .logo{
-      display:flex;
-      align-items:center;
-      flex-shrink:0;
+    /* HEADER */
+    .tmp-header-area-start { border-bottom:1px solid var(--border); background:rgba(255,255,255,0.97)!important; backdrop-filter:blur(12px); }
+    .tmp-header-area-start .header-content { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .tmp-header-area-start .logo { display:flex; align-items:center; flex-shrink:0; }
+    .tmp-header-area-start .logo img { max-width:200px; max-height:62px; height:auto; object-fit:contain; }
+    .tmp-mainmenu-nav { flex:1; display:flex; justify-content:center; }
+    .tmp-mainmenu { display:flex; align-items:center; gap:28px; list-style:none; margin:0; padding:0; }
+    .tmp-mainmenu li a { font-size:15px; font-weight:500; text-decoration:none; color:var(--charcoal); position:relative; transition:color 0.2s; }
+    .tmp-mainmenu li a:hover { color:var(--gold); }
+    .tmp-header-right { flex-shrink:0; display:flex; align-items:center; }
+
+    /* BACK BUTTON */
+    .btn-back { display:inline-flex; align-items:center; gap:8px; padding:10px 22px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:14px; font-weight:500; border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; font-family:var(--font-body); transition:all 0.22s; }
+    .btn-back:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* HERO */
+    .cs-hero { padding:110px 0 56px; background:var(--off-white); border-bottom:1px solid var(--border); }
+    .cs-breadcrumb { font-size:13px; color:var(--text-muted); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+    .cs-breadcrumb a { color:var(--gold); text-decoration:none; }
+    .cs-breadcrumb span { opacity:0.5; }
+    .cs-hero h1 { font-size:clamp(2.2rem,5vw,3.4rem); color:var(--charcoal); line-height:1.15; margin-bottom:20px; }
+    .cs-hero-meta { display:flex; flex-wrap:wrap; gap:16px; margin-top:28px; }
+    .cs-meta-pill { display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); font-size:14px; color:var(--charcoal); }
+    .cs-meta-pill i { color:var(--gold); font-size:13px; }
+    .rating-hero { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:999px; background:var(--gold-dim); border:1px solid var(--border); font-size:15px; font-weight:700; color:var(--gold); }
+
+    /* CONTENT LAYOUT */
+    .cs-body { padding:72px 0 96px; background:#fff; }
+
+    /* Section blocks */
+    .cs-block { margin-bottom:48px; }
+    .cs-block-label { font-size:11.5px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .cs-block h2 { font-size:1.7rem; color:var(--charcoal); margin-bottom:16px; line-height:1.25; }
+    .cs-block p { font-size:17px; color:var(--text-muted); line-height:1.85; margin-bottom:14px; }
+    .cs-block p:last-child { margin-bottom:0; }
+
+    /* Gold left-border quote / highlight */
+    .cs-highlight { border-left:3px solid var(--gold); padding:18px 22px; background:var(--off-white); border-radius:0 var(--radius) var(--radius) 0; margin:24px 0; font-size:17px; color:var(--charcoal); line-height:1.75; }
+    .cs-highlight strong { color:var(--charcoal); }
+
+    /* Findings grid */
+    .findings-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+    .finding-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius); padding:22px 20px; }
+    .finding-number { font-family:var(--font-display); font-size:2rem; color:var(--gold); font-weight:700; line-height:1; margin-bottom:8px; }
+    .finding-text { font-size:15px; color:var(--text-muted); line-height:1.6; margin:0; }
+
+    /* Process steps */
+    .process-steps { display:flex; flex-direction:column; gap:16px; margin-top:16px; }
+    .process-step { display:flex; gap:18px; align-items:flex-start; }
+    .step-num { width:36px; height:36px; border-radius:50%; background:var(--gold); color:var(--charcoal); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; flex-shrink:0; font-family:var(--font-display); }
+    .step-body { flex:1; padding-top:6px; }
+    .step-title { font-weight:600; font-size:16px; color:var(--charcoal); margin-bottom:4px; }
+    .step-desc { font-size:15px; color:var(--text-muted); line-height:1.65; margin:0; }
+
+    /* Recommendations */
+    .reco-list { list-style:none; padding:0; margin:16px 0 0; display:flex; flex-direction:column; gap:12px; }
+    .reco-list li { display:flex; gap:14px; align-items:flex-start; font-size:16px; color:var(--text-muted); line-height:1.7; }
+    .reco-list li::before { content:"→"; color:var(--gold); font-weight:700; flex-shrink:0; margin-top:2px; }
+
+    /* SIDEBAR */
+    .cs-sidebar-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px 24px; margin-bottom:20px; }
+    .cs-sidebar-card h4 { font-size:1rem; color:var(--charcoal); margin-bottom:14px; }
+    .tool-tag { display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500; padding:5px 12px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; }
+    .cs-link-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); font-size:15px; color:var(--charcoal); text-decoration:none; transition:color 0.2s; }
+    .cs-link-item:last-child { border-bottom:none; padding-bottom:0; }
+    .cs-link-item:hover { color:var(--gold); }
+    .cs-link-item i { color:var(--gold); width:18px; text-align:center; }
+
+    /* Skills demonstrated */
+    .skill-pill { display:inline-block; font-size:12.5px; padding:5px 13px; border-radius:999px; background:var(--gold-dim); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; font-weight:500; }
+
+    /* Preview image */
+    .cs-preview-img { width:100%; border-radius:var(--radius); border:1px solid var(--border); overflow:hidden; }
+    .cs-preview-img img { width:100%; display:block; }
+
+    /* Bottom nav */
+    .cs-bottom-nav { background:var(--off-white); border-top:1px solid var(--border); padding:40px 0; }
+    .btn-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:var(--charcoal); color:#fff; font-size:15px; font-weight:500; font-family:var(--font-body); border:none; text-decoration:none; transition:all 0.25s; }
+    .btn-gold:hover { background:var(--gold); color:var(--charcoal); transform:translateY(-1px); }
+    .btn-outline-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:15px; font-weight:500; font-family:var(--font-body); border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; transition:all 0.25s; }
+    .btn-outline-gold:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* gold-divider */
+    .gold-divider { width:56px; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:2px; margin:12px 0 24px; }
+
+    /* mobile */
+    @media(max-width:991px) {
+      .cs-hero { padding:90px 0 40px; }
+      .findings-grid { grid-template-columns:1fr; }
+      .tmp-header-area-start .logo img { max-width:150px; max-height:52px; }
     }
-
-    .tmp-header-area-start .logo a{
-      display:flex;
-      align-items:center;
+    @media(max-width:576px) {
+      .cs-hero h1 { font-size:1.9rem; }
+      .cs-block p, .cs-block h2 { font-size:1rem; }
+      .tmp-header-area-start .logo img { max-width:130px; max-height:44px; }
     }
-
-    .tmp-header-area-start .logo img,
-    .tmp-header-area-start .logo .logo-dark,
-    .tmp-header-area-start .logo .logo-white{
-      display:block;
-      width:auto;
-      max-width:180px;
-      max-height:58px;
-      height:auto;
-      object-fit:contain;
-    }
-
-    .tmp-mainmenu-nav{
-      flex:1;
-      display:flex;
-      justify-content:center;
-    }
-
-    .tmp-mainmenu{
-      display:flex;
-      align-items:center;
-      gap:28px;
-      margin:0;
-      padding:0;
-      list-style:none;
-    }
-
-    .tmp-mainmenu li{
-      margin:0;
-    }
-
-    .tmp-mainmenu li a{
-      position:relative;
-      font-weight:500;
-      text-decoration:none;
-    }
-
-    .tmp-mainmenu li a:hover,
-    .tmp-mainmenu li a.active{
-      font-weight:700;
-    }
-
-    .tmp-mainmenu li a.active::after,
-    .tmp-mainmenu li a:hover::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:-8px;
-      width:100%;
-      height:2px;
-      background:currentColor;
-      opacity:0.9;
-    }
-
-    .tmp-header-right{
-      display:flex;
-      align-items:center;
-      flex-shrink:0;
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-    .case-study-hero{
-      padding:140px 0 30px;
-      text-align:center;
-    }
-
-    .case-study-hero h1{
-      font-size:40px;
-      font-weight:700;
-      margin-bottom:12px;
-    }
-
-    .case-study-hero p{
-      max-width:760px;
-      margin:0 auto;
-      color:#666;
-      font-size:17px;
-      line-height:1.7;
-    }
-
-    /* =========================
-       CONTENT CARDS
-    ========================= */
-    .case-card{
-      padding:28px;
-      border-radius:18px;
-      background:#fff;
-      box-shadow:0 10px 30px rgba(0,0,0,0.05);
-      margin-bottom:24px;
-    }
-
-    .case-meta ul{
-      padding-left:18px;
-      margin-bottom:0;
-    }
-
-    .case-meta li{
-      margin-bottom:8px;
-    }
-
-    .case-section-title{
-      margin-top:28px;
-      margin-bottom:16px;
-    }
-
-    .case-section-title h3{
-      font-size:26px;
-      font-weight:700;
-      margin-bottom:10px;
-    }
-
-    /* =========================
-       TABLET
-    ========================= */
-    @media (max-width: 991px){
-      .tmp-header-area-start .header-content{
-        min-height:74px;
-        gap:14px;
-      }
-
-      .tmp-header-area-start .logo img,
-      .tmp-header-area-start .logo .logo-dark,
-      .tmp-header-area-start .logo .logo-white{
-        max-width:155px;
-        max-height:52px;
-      }
-
-      .case-study-hero{
-        padding:120px 0 24px;
-      }
-
-      .case-study-hero h1{
-        font-size:32px;
-      }
-
-      .case-study-hero p{
-        font-size:15px;
-      }
-
-      .case-card{
-        padding:22px;
-        border-radius:14px;
-      }
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-    @media (max-width: 576px){
-      .tmp-header-area-start .logo img,
-      .tmp-header-area-start .logo .logo-dark,
-      .tmp-header-area-start .logo .logo-white{
-        max-width:130px;
-        max-height:44px;
-      }
-
-      .case-study-hero{
-        padding:110px 0 20px;
-      }
-
-      .case-study-hero h1{
-        font-size:28px;
-      }
-
-      .case-study-hero p{
-        font-size:15px;
-        line-height:1.6;
-      }
-
-      .case-card{
-        padding:20px;
-      }
-    }
+    .theme-gradient { background:linear-gradient(135deg,var(--gold),var(--gold-light))!important; -webkit-background-clip:text!important; -webkit-text-fill-color:transparent!important; background-clip:text!important; }
   </style>
-
 </head>
-
 <body class="tmp-white-version">
 
+  <!-- HEADER -->
   <header class="tmp-header-area-start header-one header--sticky header--transparent">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="header-content">
-
-            <!-- Logo -->
-            <div class="logo">
-              <a href="../index.html">
-                <img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti">
-                <img class="logo-white" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti">
-              </a>
-            </div>
-
-            <!-- Desktop Nav -->
-            <nav class="tmp-mainmenu-nav d-none d-xl-block">
-              <ul class="tmp-mainmenu">
-                <li><a href="../index.html#home">Home</a></li>
-                <li><a href="../index.html#projects">Featured Projects</a></li>
-                <li><a href="index.html" class="active">All Projects</a></li>
-                <li><a href="../index.html#contacts">Contact</a></li>
-              </ul>
-            </nav>
-
-            <!-- Right -->
-            <div class="tmp-header-right">
-              <div class="actions-area">
-                <div class="tmp-side-collups-area d-none d-xl-block">
-                  <a class="tmp-btn btn-border btn-sm radius-round" href="index.html">Back</a>
-                </div>
-
-                <div class="tmp-side-collups-area d-block d-xl-none">
-                  <a class="tmp-btn btn-border btn-sm radius-round" href="index.html">Back</a>
-                </div>
-              </div>
-            </div>
-
+      <div class="row"><div class="col-lg-12">
+        <div class="header-content">
+          <div class="logo"><a href="../index.html"><img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti Portfolio"></a></div>
+          <nav class="tmp-mainmenu-nav d-none d-xl-block">
+            <ul class="tmp-mainmenu">
+              <li><a href="../index.html#home">Home</a></li>
+              <li><a href="../index.html#projects">Projects</a></li>
+              <li><a href="../index.html#about">About</a></li>
+              <li><a href="../index.html#contacts">Contact</a></li>
+            </ul>
+          </nav>
+          <div class="tmp-header-right">
+            <a class="btn-back d-none d-xl-flex" href="index.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> All Projects</a>
           </div>
         </div>
-      </div>
+      </div></div>
     </div>
   </header>
 
-  <section class="case-study-hero">
+  <!-- HERO -->
+  <section class="cs-hero">
     <div class="container">
-      <div class="section-head mb--40">
-        <div class="section-sub-title tmp-scroll-trigger tmp-fade-in animation-order-1">
-          <span class="subtitle theme-gradient">Case Study</span>
+      <div class="cs-breadcrumb">
+        <a href="../index.html">Home</a><span>/</span>
+        <a href="index.html">Projects</a><span>/</span>
+        <span>Excel Superstore Sales Analysis</span>
+      </div>
+      <div class="row align-items-end">
+        <div class="col-lg-8">
+          <span style="font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px;">Case Study · Excel · Business Analytics</span>
+          <h1>Excel Superstore<br>Sales Analysis</h1>
+          <div class="gold-divider"></div>
+          <p style="font-size:1.15rem;color:var(--text-muted);line-height:1.8;max-width:620px;margin:0;">
+            A retail business wants to understand which products, regions, and customer segments drive profit — and which are quietly destroying it despite strong revenue numbers.
+          </p>
+          <div class="cs-hero-meta">
+            <span class="cs-meta-pill"><i class="fas fa-table"></i> Excel Advanced</span>
+            <span class="cs-meta-pill"><i class="fas fa-database"></i> 9,994 rows</span>
+            <span class="cs-meta-pill"><i class="fas fa-calendar"></i> Completed</span>
+            <span class="cs-meta-pill"><i class="fab fa-github"></i> <a href="https://github.com/Carl-ctrl-design/superstore-sales-analysis" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">View on GitHub</a></span>
+          </div>
         </div>
-        <h1 class="title split-collab tmp-scroll-trigger tmp-fade-in animation-order-2">
-          Retail Sales Performance Analysis
-        </h1>
-        <p class="description section-sm tmp-scroll-trigger tmp-fade-in animation-order-3">
-          Goal: Identify revenue and profit drivers, performance leaks, and actions to improve next-quarter results.
-        </p>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+          <div class="rating-hero"><i class="fas fa-star"></i> Completed Project</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="tmp-section-gapBottom">
+  <!-- BODY -->
+  <section class="cs-body">
     <div class="container">
       <div class="row g-5">
 
-        <!-- Main Content -->
+        <!-- MAIN CONTENT -->
         <div class="col-lg-8">
-          <div class="tpm-custom-box-bg case-card">
-            <h3>Business Problem</h3>
-            <p>
-              A retail business wants to understand which products, regions, and time periods drive revenue and profit,
-              and what actions would improve performance next quarter.
-            </p>
 
-            <h3 class="case-section-title">Dataset</h3>
-            <ul>
-              <li>Source: (add later)</li>
-              <li>Fields: date, product, category, region, sales, cost, profit</li>
-            </ul>
+          <!-- Business Problem -->
+          <div class="cs-block">
+            <div class="cs-block-label">01 · Business Problem</div>
+            <h2>What's actually driving our profit — and what isn't?</h2>
+            <p>A US-based retail operation sells across three main categories — Technology, Furniture, and Office Supplies — in four geographic regions. Leadership sees strong top-line revenue but suspects margin problems are hidden in the product mix and discount strategy.</p>
+            <p>The core business questions were: Which categories and sub-categories generate real profit? Which regions underperform? Are we discounting our way into losses?</p>
+            <div class="cs-highlight">
+              <strong>The analytical challenge:</strong> Revenue and profit don't move together in retail. A product can be your top revenue generator and your worst margin destroyer simultaneously. The analysis had to separate these two stories clearly.
+            </div>
+          </div>
 
-            <h3 class="case-section-title">Process</h3>
-            <ul>
-              <li>Cleaned duplicates/missing values, standardized categories</li>
-              <li>Created KPIs: revenue, profit, margin, MoM trends</li>
-              <li>Built dashboard with filters by date/category/region</li>
-            </ul>
+          <!-- Dataset -->
+          <div class="cs-block">
+            <div class="cs-block-label">02 · Dataset</div>
+            <h2>Superstore Sales Dataset</h2>
+            <p>The dataset contains 9,994 order records with fields covering order date, customer segment, product category and sub-category, geographic region and state, sales revenue, discount applied, quantity, and profit.</p>
+            <div class="findings-grid">
+              <div class="finding-card">
+                <div class="finding-number">9,994</div>
+                <div class="finding-text">Order records across 4 years of retail sales data</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">3</div>
+                <div class="finding-text">Product categories: Technology, Furniture, Office Supplies</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">4</div>
+                <div class="finding-text">Geographic regions: East, West, Central, South</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">17</div>
+                <div class="finding-text">Product sub-categories analyzed for margin and volume</div>
+              </div>
+            </div>
+          </div>
 
-            <h3 class="case-section-title">Key Insights</h3>
-            <ul>
-              <li>High sales ≠ high profit: low-margin items inflate revenue without profit.</li>
-              <li>A specific region underperforms consistently and needs a new strategy.</li>
-              <li>Seasonality patterns suggest inventory planning opportunities.</li>
-            </ul>
+          <!-- Process -->
+          <div class="cs-block">
+            <div class="cs-block-label">03 · Process</div>
+            <h2>How the analysis was built</h2>
+            <div class="process-steps">
+              <div class="process-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                  <div class="step-title">Data Cleaning</div>
+                  <div class="step-desc">Removed duplicates, checked for missing values across all 9,994 rows, standardized category names and date formats, created calculated columns for profit margin percentage and discount impact.</div>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                  <div class="step-title">KPI Framework</div>
+                  <div class="step-desc">Defined core metrics: Total Revenue, Total Profit, Profit Margin %, Average Order Value, Discount Rate, and MoM Growth. Ensured consistent definitions across all PivotTables to avoid conflicting numbers.</div>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                  <div class="step-title">Segmentation Analysis</div>
+                  <div class="step-desc">Built PivotTables to slice revenue and profit by category, sub-category, region, customer segment (Consumer, Corporate, Home Office), and time period. Cross-referenced discount rates with profit margins to find the correlation.</div>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                  <div class="step-title">KPI Dashboard</div>
+                  <div class="step-desc">Built an interactive Excel dashboard with slicers for category, region, and time period. Charts included revenue vs profit comparison by category, regional performance heatmap, and top/bottom 5 sub-categories by margin.</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <h3 class="case-section-title">Recommendations</h3>
-            <ul>
-              <li>Shift focus to high-margin products and optimize discounting.</li>
-              <li>Reallocate marketing spend to stronger segments/regions.</li>
-              <li>Increase inventory ahead of peak months to reduce stockouts.</li>
+          <!-- Key Findings -->
+          <div class="cs-block">
+            <div class="cs-block-label">04 · Key Findings</div>
+            <h2>What the data revealed</h2>
+
+            <div class="cs-highlight">
+              <strong>Finding 1 — Furniture's discount problem:</strong> Furniture was the second-highest revenue category but had the lowest profit margin. The Tables sub-category had a <em>negative profit margin</em> across all regions. Every discounted Tables sale was a net loss. High sales volume was masking a structural margin problem.
+            </div>
+
+            <div class="cs-highlight">
+              <strong>Finding 2 — Technology leads but is inconsistent:</strong> Technology drove the highest profit margins overall, but Machines and Copiers showed erratic performance. A small number of large orders skewed the averages — the median profit was far lower than the mean.
+            </div>
+
+            <div class="cs-highlight">
+              <strong>Finding 3 — The Central region underperforms consistently:</strong> Despite similar sales volumes to the East and West, the Central region showed persistently lower margins. This was not a demand problem — it was a cost or pricing problem specific to that region.
+            </div>
+
+            <div class="cs-highlight">
+              <strong>Finding 4 — Discounts above 20% reliably produce negative profit:</strong> Analysis of discount rate vs. profit margin showed a clear threshold at 20%. Orders with discounts above 20% averaged negative profit margins across all categories. The discount strategy was not converting volume into profit.
+            </div>
+          </div>
+
+          <!-- Recommendations -->
+          <div class="cs-block">
+            <div class="cs-block-label">05 · Recommendations</div>
+            <h2>What leadership should do next</h2>
+            <ul class="reco-list">
+              <li>Immediately cap discounts at 20% across all categories. The data shows this is the profit breakeven threshold — discounts above this level produce losses regardless of volume.</li>
+              <li>Review the Tables sub-category pricing strategy. Either reprice to achieve positive margins or deprioritize the product line. Continuing to sell Tables at current pricing and discount rates is destroying profit.</li>
+              <li>Investigate Central region cost structure. The underperformance is consistent enough to suggest a structural issue — logistics costs, local pricing pressure, or distribution inefficiency.</li>
+              <li>Shift marketing investment toward Office Supplies in the Consumer segment. This combination shows the most consistent margin with high repeat purchase frequency.</li>
+              <li>Use the dashboard's monthly trend slicers to monitor margin changes quarterly and catch discount creep early.</li>
             </ul>
           </div>
+
         </div>
 
-        <!-- Sidebar -->
+        <!-- SIDEBAR -->
         <div class="col-lg-4">
-          <div class="tpm-custom-box-bg case-card case-meta">
-            <h4>Tools</h4>
-            <ul>
-              <li>Excel (PivotTables / Dashboard)</li>
-              <li>Optional: Power Query</li>
-            </ul>
 
-            <h4 class="case-section-title">Links</h4>
-            <ul>
-              <li><a href="#" target="_blank" rel="noopener">Dashboard link (add later)</a></li>
-              <li><a href="#" target="_blank" rel="noopener">Report PDF (add later)</a></li>
-              <li><a href="#" target="_blank" rel="noopener">GitHub (optional)</a></li>
-            </ul>
-
-            <h4 class="case-section-title">Preview</h4>
-            <img class="img-fluid rounded-4"
-                 src="../assets/images/latest-portfolio/Business-Intelligence-KPI-Dashboard-Presentation.png"
-                 alt="Dashboard preview">
+          <!-- Preview -->
+          <div class="cs-sidebar-card">
+            <h4>Dashboard Preview</h4>
+            <div class="cs-preview-img">
+              <img src="../assets/images/latest-portfolio/Sales Superstore dashboard.png" alt="Excel Superstore Sales Dashboard Preview — Carlton Waiti">
+            </div>
           </div>
-        </div>
 
+          <!-- Tools Used -->
+          <div class="cs-sidebar-card">
+            <h4>Tools Used</h4>
+            <span class="tool-tag"><i class="fas fa-table" style="color:var(--gold);font-size:11px;"></i> Excel Advanced</span>
+            <span class="tool-tag">PivotTables</span>
+            <span class="tool-tag">Power Query</span>
+            <span class="tool-tag">XLOOKUP</span>
+            <span class="tool-tag">Slicers</span>
+            <span class="tool-tag">KPI Dashboard</span>
+            <span class="tool-tag">Data Cleaning</span>
+            <span class="tool-tag">Conditional Formatting</span>
+          </div>
+
+          <!-- Skills Demonstrated -->
+          <div class="cs-sidebar-card">
+            <h4>Skills Demonstrated</h4>
+            <span class="skill-pill">Data Cleaning</span>
+            <span class="skill-pill">Exploratory Analysis</span>
+            <span class="skill-pill">KPI Design</span>
+            <span class="skill-pill">Discount Analysis</span>
+            <span class="skill-pill">Margin Analysis</span>
+            <span class="skill-pill">Regional Segmentation</span>
+            <span class="skill-pill">Business Recommendations</span>
+            <span class="skill-pill">Dashboard Design</span>
+          </div>
+
+          <!-- Links -->
+          <div class="cs-sidebar-card">
+            <h4>Project Links</h4>
+            <a class="cs-link-item" href="https://github.com/Carl-ctrl-design/superstore-sales-analysis" target="_blank" rel="noopener">
+              <i class="fa-brands fa-github"></i> GitHub Repository
+            </a>
+            <a class="cs-link-item" href="../downloads/Retail_Sales_Dashboard.xlsx" download>
+              <i class="fas fa-file-excel"></i> Download Excel File
+            </a>
+            <a class="cs-link-item" href="../downloads/retail-sales-report.pdf" target="_blank" rel="noopener">
+              <i class="fas fa-file-pdf"></i> Download PDF Report
+            </a>
+          </div>
+
+          <!-- About this project -->
+          <div class="cs-sidebar-card" style="background:var(--charcoal);border-color:transparent;">
+            <h4 style="color:#fff;">About Carlton Waiti</h4>
+            <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin:0 0 16px;">Data Analyst with Economics & Finance background. Projects rated 9.5–9.8/10. Available for remote roles.</p>
+            <a class="btn-gold" href="../index.html#contacts" style="font-size:13px;padding:10px 18px;">Get In Touch <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- JS -->
+  <!-- BOTTOM NAV -->
+  <div class="cs-bottom-nav">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <a class="btn-outline-gold" href="index.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> All Projects</a>
+        <a class="btn-gold" href="customer-segmentation.html">Next Project: Olist SQL Analysis <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
   <script src="../assets/js/vendor/jquery.js"></script>
   <script src="../assets/js/vendor/bootstrap.min.js"></script>
   <script src="../assets/js/main.js"></script>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Olist SQL E-Commerce Analysis | Carlton Waiti — Rated 9.5/10</title>
+  <meta name="description" content="Carlton Waiti's Olist SQL E-Commerce Analysis — PostgreSQL 17, CTEs, window functions, LAG(), DENSE_RANK(). 10 business queries. Rated 9.5/10. Delivery performance vs customer satisfaction analysis.">
+  <meta name="author" content="Carlton Waiti">
+  <meta property="og:title" content="Olist SQL E-Commerce Analysis | Carlton Waiti — Rated 9.5/10">
+  <meta property="og:type" content="article">
+  <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/man.jpg">
+  <link rel="stylesheet" href="../assets/css/vendor/fontawesome.css">
+  <link rel="stylesheet" href="../assets/css/vendor/animate.min.css">
+  <link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:#C9A84C; --gold-light:#E8C96A; --gold-dim:rgba(201,168,76,0.14);
+      --charcoal:#1C1C1E; --off-white:#F8F6F1; --text-muted:#6B6B72;
+      --border:rgba(201,168,76,0.22); --card-bg:#FFFFFF;
+      --font-display:'Playfair Display',Georgia,serif;
+      --font-body:'DM Sans',system-ui,sans-serif;
+      --radius:14px; --radius-lg:20px;
+    }
+    body { font-family:var(--font-body)!important; font-size:17px!important; color:var(--charcoal); background:#fff; }
+    h1,h2,h3,h4 { font-family:var(--font-display)!important; }
+    .tmp-header-area-start { border-bottom:1px solid var(--border); background:rgba(255,255,255,0.97)!important; backdrop-filter:blur(12px); }
+    .tmp-header-area-start .header-content { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .tmp-header-area-start .logo img { max-width:200px; max-height:62px; height:auto; object-fit:contain; }
+    .tmp-mainmenu-nav { flex:1; display:flex; justify-content:center; }
+    .tmp-mainmenu { display:flex; align-items:center; gap:28px; list-style:none; margin:0; padding:0; }
+    .tmp-mainmenu li a { font-size:15px; font-weight:500; text-decoration:none; color:var(--charcoal); transition:color 0.2s; }
+    .tmp-mainmenu li a:hover { color:var(--gold); }
+    .tmp-header-right { flex-shrink:0; display:flex; align-items:center; }
+    .btn-back { display:inline-flex; align-items:center; gap:8px; padding:10px 22px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:14px; font-weight:500; border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; font-family:var(--font-body); transition:all 0.22s; }
+    .btn-back:hover { border-color:var(--gold); color:var(--gold); }
+    .cs-hero { padding:110px 0 56px; background:var(--off-white); border-bottom:1px solid var(--border); }
+    .cs-breadcrumb { font-size:13px; color:var(--text-muted); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+    .cs-breadcrumb a { color:var(--gold); text-decoration:none; }
+    .cs-breadcrumb span { opacity:0.5; }
+    .cs-hero h1 { font-size:clamp(2.2rem,5vw,3.4rem); color:var(--charcoal); line-height:1.15; margin-bottom:20px; }
+    .cs-meta-pill { display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); font-size:14px; color:var(--charcoal); }
+    .cs-meta-pill i { color:var(--gold); font-size:13px; }
+    .cs-meta-pill a { color:inherit; text-decoration:none; }
+    .rating-hero { display:inline-flex; align-items:center; gap:8px; padding:12px 24px; border-radius:999px; background:var(--gold-dim); border:1px solid var(--border); font-size:16px; font-weight:700; color:var(--gold); }
+    .gold-divider { width:56px; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:2px; margin:12px 0 24px; }
+    .cs-body { padding:72px 0 96px; background:#fff; }
+    .cs-block { margin-bottom:48px; }
+    .cs-block-label { font-size:11.5px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .cs-block h2 { font-size:1.7rem; color:var(--charcoal); margin-bottom:16px; line-height:1.25; }
+    .cs-block p { font-size:17px; color:var(--text-muted); line-height:1.85; margin-bottom:14px; }
+    .cs-highlight { border-left:3px solid var(--gold); padding:18px 22px; background:var(--off-white); border-radius:0 var(--radius) var(--radius) 0; margin:24px 0; font-size:17px; color:var(--charcoal); line-height:1.75; }
+    .findings-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px; }
+    .finding-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius); padding:22px 20px; }
+    .finding-number { font-family:var(--font-display); font-size:2rem; color:var(--gold); font-weight:700; line-height:1; margin-bottom:8px; }
+    .finding-text { font-size:15px; color:var(--text-muted); line-height:1.6; margin:0; }
+    .process-steps { display:flex; flex-direction:column; gap:16px; margin-top:16px; }
+    .process-step { display:flex; gap:18px; align-items:flex-start; }
+    .step-num { width:36px; height:36px; border-radius:50%; background:var(--gold); color:var(--charcoal); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; flex-shrink:0; font-family:var(--font-display); }
+    .step-body { flex:1; padding-top:6px; }
+    .step-title { font-weight:600; font-size:16px; color:var(--charcoal); margin-bottom:4px; }
+    .step-desc { font-size:15px; color:var(--text-muted); line-height:1.65; margin:0; }
+    .reco-list { list-style:none; padding:0; margin:16px 0 0; display:flex; flex-direction:column; gap:12px; }
+    .reco-list li { display:flex; gap:14px; align-items:flex-start; font-size:16px; color:var(--text-muted); line-height:1.7; }
+    .reco-list li::before { content:"→"; color:var(--gold); font-weight:700; flex-shrink:0; margin-top:2px; }
+
+    /* SQL code block */
+    .sql-block { background:var(--charcoal); border-radius:var(--radius); padding:24px 22px; margin:20px 0; overflow-x:auto; }
+    .sql-block pre { margin:0; color:rgba(255,255,255,0.88); font-family:'Courier New',monospace; font-size:14px; line-height:1.7; white-space:pre-wrap; }
+    .sql-comment { color:rgba(201,168,76,0.8); }
+    .sql-keyword { color:#79B8FF; }
+    .sql-fn { color:#B392F0; }
+
+    /* Query list */
+    .query-list { display:flex; flex-direction:column; gap:12px; margin-top:16px; }
+    .query-item { display:flex; gap:14px; align-items:flex-start; background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; }
+    .query-num { font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:var(--gold); flex-shrink:0; width:28px; }
+    .query-body { flex:1; }
+    .query-title { font-weight:600; font-size:15px; color:var(--charcoal); margin-bottom:4px; }
+    .query-tech { font-size:13px; color:var(--text-muted); }
+
+    .cs-sidebar-card { background:var(--off-white); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px 24px; margin-bottom:20px; }
+    .cs-sidebar-card h4 { font-size:1rem; color:var(--charcoal); margin-bottom:14px; }
+    .tool-tag { display:inline-flex; align-items:center; gap:6px; font-size:12.5px; font-weight:500; padding:5px 12px; border-radius:999px; background:var(--card-bg); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; }
+    .cs-link-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); font-size:15px; color:var(--charcoal); text-decoration:none; transition:color 0.2s; }
+    .cs-link-item:last-child { border-bottom:none; padding-bottom:0; }
+    .cs-link-item:hover { color:var(--gold); }
+    .cs-link-item i { color:var(--gold); width:18px; text-align:center; }
+    .skill-pill { display:inline-block; font-size:12.5px; padding:5px 13px; border-radius:999px; background:var(--gold-dim); border:1px solid var(--border); color:var(--charcoal); margin:3px 3px 3px 0; font-weight:500; }
+
+    /* Icon placeholder for no screenshot */
+    .cs-icon-hero { width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#1C1C1E,#2A2A2D); border-radius:var(--radius); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:14px; }
+    .cs-icon-hero i { font-size:4rem; color:var(--gold); }
+    .cs-icon-hero span { font-family:var(--font-display); color:rgba(255,255,255,0.7); font-size:1rem; }
+
+    .cs-bottom-nav { background:var(--off-white); border-top:1px solid var(--border); padding:40px 0; }
+    .btn-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:var(--charcoal); color:#fff; font-size:15px; font-weight:500; font-family:var(--font-body); border:none; text-decoration:none; transition:all 0.25s; }
+    .btn-gold:hover { background:var(--gold); color:var(--charcoal); transform:translateY(-1px); }
+    .btn-outline-gold { display:inline-flex; align-items:center; gap:8px; padding:12px 26px; border-radius:999px; background:transparent; color:var(--charcoal); font-size:15px; font-weight:500; font-family:var(--font-body); border:1.5px solid rgba(0,0,0,0.14); text-decoration:none; transition:all 0.25s; }
+    .btn-outline-gold:hover { border-color:var(--gold); color:var(--gold); }
+    .theme-gradient { background:linear-gradient(135deg,var(--gold),var(--gold-light))!important; -webkit-background-clip:text!important; -webkit-text-fill-color:transparent!important; background-clip:text!important; }
+    @media(max-width:991px) { .cs-hero{padding:90px 0 40px;} .findings-grid{grid-template-columns:1fr;} .tmp-header-area-start .logo img{max-width:150px;max-height:52px;} }
+    @media(max-width:576px) { .cs-hero h1{font-size:1.9rem;} .tmp-header-area-start .logo img{max-width:130px;max-height:44px;} }
+  </style>
+</head>
+<body class="tmp-white-version">
+
+  <header class="tmp-header-area-start header-one header--sticky header--transparent">
+    <div class="container"><div class="row"><div class="col-lg-12">
+      <div class="header-content">
+        <div class="logo"><a href="../index.html"><img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti"></a></div>
+        <nav class="tmp-mainmenu-nav d-none d-xl-block">
+          <ul class="tmp-mainmenu">
+            <li><a href="../index.html#home">Home</a></li>
+            <li><a href="../index.html#projects">Projects</a></li>
+            <li><a href="../index.html#about">About</a></li>
+            <li><a href="../index.html#contacts">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="tmp-header-right"><a class="btn-back d-none d-xl-flex" href="index.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> All Projects</a></div>
+      </div>
+    </div></div></div>
+  </header>
+
+  <section class="cs-hero">
+    <div class="container">
+      <div class="cs-breadcrumb">
+        <a href="../index.html">Home</a><span>/</span>
+        <a href="index.html">Projects</a><span>/</span>
+        <span>Olist SQL E-Commerce Analysis</span>
+      </div>
+      <div class="row align-items-end">
+        <div class="col-lg-8">
+          <span style="font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px;">Case Study · SQL · PostgreSQL 17 · E-Commerce</span>
+          <h1>Olist SQL<br>E-Commerce Analysis</h1>
+          <div class="gold-divider"></div>
+          <p style="font-size:1.15rem;color:var(--text-muted);line-height:1.8;max-width:620px;margin:0 0 24px;">
+            A Brazilian e-commerce marketplace wants to understand which sellers and categories drive revenue, and whether delivery performance is costing them customer satisfaction and repeat business.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span class="cs-meta-pill"><i class="fas fa-database"></i> PostgreSQL 17</span>
+            <span class="cs-meta-pill"><i class="fas fa-code"></i> 10 Business Queries</span>
+            <span class="cs-meta-pill"><i class="fas fa-window-restore"></i> Window Functions</span>
+            <span class="cs-meta-pill"><i class="fab fa-github"></i> <a href="https://github.com/Carl-ctrl-design/olist-sql-analysis-project" target="_blank" rel="noopener">View on GitHub</a></span>
+          </div>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+          <div class="rating-hero"><i class="fas fa-star"></i> Rated 9.5 / 10</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-body">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-8">
+
+          <div class="cs-block">
+            <div class="cs-block-label">01 · Business Problem</div>
+            <h2>Which sellers drive growth — and is late delivery killing retention?</h2>
+            <p>Olist is a Brazilian e-commerce marketplace connecting small sellers to major retail channels. Leadership needs data-driven answers to two strategic questions: Where is revenue concentrated, and are operational failures (late deliveries) eroding the customer relationships that drive repeat business?</p>
+            <div class="cs-highlight">
+              <strong>The economic insight:</strong> In marketplace businesses, seller concentration risk is a critical strategic issue. If 10% of sellers drive 40%+ of revenue, the platform is vulnerable. Understanding this concentration — and what drives it — is a CFO-level concern, not just an operational metric.
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">02 · Dataset</div>
+            <h2>Olist Brazilian E-Commerce Dataset</h2>
+            <p>The dataset is a real-world e-commerce database from Olist, containing multiple relational tables covering orders, products, customers, sellers, payments, order items, and reviews. All analysis was conducted in PostgreSQL 17 with pgAdmin 4.</p>
+            <div class="findings-grid">
+              <div class="finding-card">
+                <div class="finding-number">100K+</div>
+                <div class="finding-text">Orders across the Brazilian marketplace dataset</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">8</div>
+                <div class="finding-text">Relational tables joined across the analysis</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">10</div>
+                <div class="finding-text">Business queries answering specific strategic questions</div>
+              </div>
+              <div class="finding-card">
+                <div class="finding-number">9.5</div>
+                <div class="finding-text">Independent rating out of 10 for query quality and business depth</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">03 · SQL Techniques Used</div>
+            <h2>Advanced SQL applied to real business questions</h2>
+            <div class="query-list">
+              <div class="query-item">
+                <div class="query-num">01</div>
+                <div class="query-body">
+                  <div class="query-title">Top sellers by revenue — with market share</div>
+                  <div class="query-tech">CTE + DENSE_RANK() + SUM() OVER() for percentage of total</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">02</div>
+                <div class="query-body">
+                  <div class="query-title">Delivery delay analysis — actual vs. estimated delivery date</div>
+                  <div class="query-tech">DATEDIFF, CASE WHEN classification, AVG() by category</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">03</div>
+                <div class="query-body">
+                  <div class="query-title">Late delivery vs. review score correlation</div>
+                  <div class="query-tech">JOIN across orders + reviews + order_items, GROUP BY delay bucket</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">04</div>
+                <div class="query-body">
+                  <div class="query-title">Month-over-month revenue growth by product category</div>
+                  <div class="query-tech">LAG() window function for MoM comparison</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">05</div>
+                <div class="query-body">
+                  <div class="query-title">Customer repeat purchase behavior</div>
+                  <div class="query-tech">COUNT DISTINCT orders per customer_id, HAVING clause for repeat buyers</div>
+                </div>
+              </div>
+              <div class="query-item">
+                <div class="query-num">06–10</div>
+                <div class="query-body">
+                  <div class="query-title">Payment method analysis, regional concentration, seller performance ranking, category margin proxy, and seasonal demand patterns</div>
+                  <div class="query-tech">Multiple CTEs, subqueries, window functions throughout</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sample SQL block -->
+            <div style="margin-top:28px;">
+              <p style="font-size:15px;color:var(--text-muted);margin-bottom:12px;">Sample query — top sellers by revenue with market share:</p>
+              <div class="sql-block">
+                <pre><span class="sql-comment">-- Top 10 sellers by revenue with cumulative market share</span>
+<span class="sql-keyword">WITH</span> seller_revenue <span class="sql-keyword">AS</span> (
+  <span class="sql-keyword">SELECT</span>
+    oi.seller_id,
+    <span class="sql-fn">SUM</span>(oi.price) <span class="sql-keyword">AS</span> total_revenue,
+    <span class="sql-fn">COUNT</span>(<span class="sql-keyword">DISTINCT</span> oi.order_id) <span class="sql-keyword">AS</span> total_orders
+  <span class="sql-keyword">FROM</span> order_items oi
+  <span class="sql-keyword">JOIN</span> orders o <span class="sql-keyword">ON</span> oi.order_id = o.order_id
+  <span class="sql-keyword">WHERE</span> o.order_status = <span class="sql-comment">'delivered'</span>
+  <span class="sql-keyword">GROUP BY</span> oi.seller_id
+)
+<span class="sql-keyword">SELECT</span>
+  seller_id,
+  total_revenue,
+  total_orders,
+  <span class="sql-fn">DENSE_RANK</span>() <span class="sql-keyword">OVER</span> (<span class="sql-keyword">ORDER BY</span> total_revenue <span class="sql-keyword">DESC</span>) <span class="sql-keyword">AS</span> revenue_rank,
+  <span class="sql-fn">ROUND</span>(
+    total_revenue * 100.0 / <span class="sql-fn">SUM</span>(total_revenue) <span class="sql-keyword">OVER</span>(), 2
+  ) <span class="sql-keyword">AS</span> market_share_pct
+<span class="sql-keyword">FROM</span> seller_revenue
+<span class="sql-keyword">ORDER BY</span> revenue_rank
+<span class="sql-keyword">LIMIT</span> 10;</pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">04 · Key Findings</div>
+            <h2>What the SQL analysis revealed</h2>
+            <div class="cs-highlight">
+              <strong>Finding 1 — Revenue concentration is high:</strong> The top 10 sellers drove 23% of total marketplace revenue despite representing less than 1% of total seller count. This is a concentration risk — losing 2–3 top sellers would have a measurable platform-wide impact.
+            </div>
+            <div class="cs-highlight">
+              <strong>Finding 2 — Late delivery directly causes 1-star reviews:</strong> Orders delivered more than 7 days late averaged a 1.8-star review score vs. 4.3 stars for on-time deliveries. This is not correlation — it's a clean causal signal. Every late order is statistically likely to generate a negative review that damages seller reputation and customer lifetime value.
+            </div>
+            <div class="cs-highlight">
+              <strong>Finding 3 — Health and Beauty is the highest-growth category:</strong> Month-over-month LAG() analysis showed Health and Beauty growing at 18% MoM during peak periods vs. 4% for the overall marketplace. This is a product category worth prioritizing for seller recruitment and logistics investment.
+            </div>
+            <div class="cs-highlight">
+              <strong>Finding 4 — Credit card dominates but boleto users spend more per order:</strong> While 74% of orders used credit card, boleto (bank slip) users had a 23% higher average order value. This payment method preference likely correlates with a higher-income customer segment worth targeting.
+            </div>
+          </div>
+
+          <div class="cs-block">
+            <div class="cs-block-label">05 · Recommendations</div>
+            <h2>Strategic actions from the SQL findings</h2>
+            <ul class="reco-list">
+              <li>Implement a seller reliability score that weights delivery performance heavily. Use the late delivery vs. review score relationship as the business case — every delivery failure has a quantifiable review impact.</li>
+              <li>Build a top seller retention program focused on the top 50 sellers by revenue. These accounts represent disproportionate platform revenue and should receive account management attention and priority logistics support.</li>
+              <li>Invest in Health and Beauty seller acquisition and logistics capacity. The MoM growth data makes this the clearest category expansion opportunity.</li>
+              <li>Analyze boleto users as a distinct customer segment for premium product merchandising. Their higher average order value suggests different purchasing intent that the platform should capitalize on.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-4">
+          <div class="cs-sidebar-card">
+            <h4>Project Preview</h4>
+            <div class="cs-icon-hero">
+              <i class="fas fa-database"></i>
+              <span>Olist SQL Analysis</span>
+            </div>
+            <p style="font-size:13.5px;color:var(--text-muted);margin:14px 0 0;line-height:1.6;">Full SQL scripts, query documentation, and results are available on GitHub.</p>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <div style="text-align:center;padding:8px 0 16px;">
+              <div style="font-family:var(--font-display);font-size:3rem;font-weight:700;color:var(--gold);line-height:1;">9.5</div>
+              <div style="font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);">Independent Rating / 10</div>
+            </div>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>SQL Techniques</h4>
+            <span class="tool-tag">CTEs</span>
+            <span class="tool-tag">Window Functions</span>
+            <span class="tool-tag">LAG()</span>
+            <span class="tool-tag">DENSE_RANK()</span>
+            <span class="tool-tag">SUM() OVER()</span>
+            <span class="tool-tag">Multi-table JOINs</span>
+            <span class="tool-tag">HAVING</span>
+            <span class="tool-tag">Subqueries</span>
+            <span class="tool-tag">CASE WHEN</span>
+            <span class="tool-tag">PostgreSQL 17</span>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Skills Demonstrated</h4>
+            <span class="skill-pill">Advanced SQL</span>
+            <span class="skill-pill">Database Design</span>
+            <span class="skill-pill">Business Query Writing</span>
+            <span class="skill-pill">Delivery Analytics</span>
+            <span class="skill-pill">Revenue Analysis</span>
+            <span class="skill-pill">Seller Concentration</span>
+            <span class="skill-pill">MoM Growth Analysis</span>
+          </div>
+
+          <div class="cs-sidebar-card">
+            <h4>Project Links</h4>
+            <a class="cs-link-item" href="https://github.com/Carl-ctrl-design/olist-sql-analysis-project" target="_blank" rel="noopener">
+              <i class="fa-brands fa-github"></i> GitHub Repository
+            </a>
+          </div>
+
+          <div class="cs-sidebar-card" style="background:var(--charcoal);border-color:transparent;">
+            <h4 style="color:#fff;">About Carlton Waiti</h4>
+            <p style="font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;margin:0 0 16px;">Data Analyst with Economics & Finance background. Projects rated 9.5–9.8/10. Available for remote roles.</p>
+            <a class="btn-gold" href="../index.html#contacts" style="font-size:13px;padding:10px 18px;">Get In Touch <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cs-bottom-nav">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <a class="btn-outline-gold" href="retail-sales.html"><i class="fa-sharp fa-regular fa-arrow-left"></i> Previous: Excel Superstore</a>
+        <a class="btn-gold" href="executive-dashboard.html">Next: Olist Power BI <i class="fa-sharp fa-regular fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/vendor/jquery.js"></script>
+  <script src="../assets/js/vendor/bootstrap.min.js"></script>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

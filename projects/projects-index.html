@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Projects | Carlton Waiti — Data Analyst | SQL · Power BI · Excel · Python </title>
+  <meta name="description" content="Portfolio of Carlton Waiti — Data Analyst and Business Intelligence Specialist, Nairobi Kenya. Projects in SQL, Power BI, and Excel rated up to 9.8/10. Financial analytics, e-commerce analysis, and executive dashboards.">
+  <meta name="author" content="Carlton Waiti">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://carl-ctrl-design.github.io/C.Waiti/projects/">
+
+  <meta property="og:title" content="Projects | Carlton Waiti — Data Analyst">
+  <meta property="og:description" content="Analytics case studies rated 9.5–9.8/10. SQL, Power BI, Excel. Financial analytics, e-commerce, HR.">
+  <meta property="og:url" content="https://carl-ctrl-design.github.io/C.Waiti/projects/">
+  <meta property="og:image" content="../assets/images/logo/man.jpg">
+  <meta property="og:type" content="website">
+
+  <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo/man.jpg">
+
+  <link rel="stylesheet" href="../assets/css/vendor/fontawesome.css">
+  <link rel="stylesheet" href="../assets/css/plugins/swiper.css">
+  <link rel="stylesheet" href="../assets/css/plugins/odometer.css">
+  <link rel="stylesheet" href="../assets/css/vendor/animate.min.css">
+  <link rel="stylesheet" href="../assets/css/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <!-- Same premium font pairing as Index.html -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================
+       CARL WAITI — DESIGN SYSTEM (PROJECTS PAGE)
+       Matches Index.html exactly
+       ========================================= */
+
+    :root {
+      --gold:        #C9A84C;
+      --gold-light:  #E8C96A;
+      --gold-dim:    rgba(201,168,76,0.15);
+      --charcoal:    #1C1C1E;
+      --charcoal-2:  #2A2A2D;
+      --off-white:   #F8F6F1;
+      --text-main:   #1C1C1E;
+      --text-muted:  #6B6B72;
+      --border:      rgba(201,168,76,0.22);
+      --card-bg:     #FFFFFF;
+      --font-display:'Playfair Display', Georgia, serif;
+      --font-body:   'DM Sans', system-ui, sans-serif;
+      --radius:      14px;
+      --radius-lg:   20px;
+      --shadow:      0 12px 40px rgba(0,0,0,0.08);
+      --shadow-hover:0 20px 60px rgba(0,0,0,0.14);
+    }
+
+    /* ===== BASE ===== */
+    body.tmp-white-version {
+      font-family: var(--font-body) !important;
+      font-size: 16px !important;          /* bumped from template default */
+      background: #FFFFFF;
+      color: var(--text-main);
+    }
+
+    h1, h2, h3, h4 { font-family: var(--font-display) !important; }
+
+    /* ===== HEADER ===== */
+    .tmp-header-area-start {
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.96) !important;
+      backdrop-filter: blur(12px);
+    }
+
+    .tmp-header-area-start .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .tmp-header-area-start .logo {
+      display: flex; align-items: center;
+      flex-shrink: 0;
+    }
+
+    .tmp-header-area-start .logo img {
+      max-width: 200px; max-height: 64px;
+      height: auto; object-fit: contain;
+    }
+
+    .tmp-mainmenu-nav { flex: 1; display: flex; justify-content: center; }
+    .tmp-header-right { display: flex; align-items: center; flex-shrink: 0; }
+
+    /* Back button styled in gold */
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--charcoal);
+      font-size: 13px;
+      font-weight: 500;
+      border: 1.5px solid rgba(0,0,0,0.15);
+      text-decoration: none;
+      font-family: var(--font-body);
+      transition: all 0.25s;
+    }
+
+    .btn-back:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ===== HERO ===== */
+    .projects-hero {
+      padding: 120px 0 72px;
+      background: #FFFFFF;
+      text-align: center;
+    }
+
+    .section-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .projects-hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      color: var(--charcoal);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .projects-hero p {
+      font-size: 1.125rem;          /* 18px — noticeably larger */
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 32px;
+      line-height: 1.8;
+      font-family: var(--font-body);
+    }
+
+    .gold-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 2px;
+      margin: 0 auto 32px;
+    }
+
+    /* Filter pills */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 0;
+    }
+
+    .filter-pill {
+      padding: 9px 22px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1.5px solid rgba(0,0,0,0.10);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all 0.2s;
+    }
+
+    .filter-pill:hover,
+    .filter-pill.active {
+      background: var(--charcoal);
+      color: #fff;
+      border-color: var(--charcoal);
+    }
+
+    .filter-pill.active { background: var(--gold); border-color: var(--gold); color: var(--charcoal); font-weight: 600; }
+
+    /* ===== PROJECTS GRID ===== */
+    .projects-section {
+      background: var(--off-white);
+      padding: 72px 0 96px;
+    }
+
+    /* Project card */
+    .cw-project-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cw-project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border);
+    }
+
+    /* Image area */
+    .cw-card-img {
+      position: relative;
+      overflow: hidden;
+      background: var(--off-white);
+      aspect-ratio: 16/9;
+    }
+
+    .cw-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+      display: block;
+    }
+
+    .cw-project-card:hover .cw-card-img img { transform: scale(1.04); }
+
+    /* Icon placeholder when no screenshot */
+    .cw-card-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .cw-card-placeholder i {
+      font-size: 2.8rem;
+      color: var(--gold);
+    }
+
+    .cw-card-placeholder span {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--charcoal);
+      line-height: 1.35;
+    }
+
+    /* Rating badge */
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 13px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .progress-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(100,100,120,0.08);
+      border: 1px solid rgba(100,100,120,0.15);
+      border-radius: 999px;
+      padding: 5px 13px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Card body */
+    .cw-card-body {
+      padding: 24px 26px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .cw-card-title {
+      font-size: 1.2rem;           /* larger than original */
+      color: var(--charcoal);
+      margin: 0;
+      line-height: 1.35;
+    }
+
+    .cw-card-question {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    .cw-card-finding {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin: 0;
+      padding: 12px 14px;
+      background: var(--off-white);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .cw-card-finding strong { color: var(--charcoal); }
+
+    /* Tool tags */
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tool-tag {
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--gold-dim);
+      color: var(--charcoal);
+      border: 1px solid var(--border);
+    }
+
+    /* Card footer */
+    .cw-card-footer {
+      padding: 0 26px 22px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: var(--charcoal);
+      color: #fff;
+      font-size: 13.5px;
+      font-weight: 500;
+      font-family: var(--font-body);
+      border: none;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .btn-gold:hover { background: var(--gold); color: var(--charcoal); transform: translateY(-1px); }
+
+    .btn-outline-gold {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--charcoal);
+      font-size: 13.5px;
+      font-weight: 500;
+      font-family: var(--font-body);
+      border: 1.5px solid rgba(0,0,0,0.14);
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+
+    .btn-outline-gold:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+
+    /* Highest rated banner on card */
+    .card-top-banner {
+      padding: 8px 18px;
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--charcoal);
+    }
+
+    /* In-progress card dimmed */
+    .card-in-progress { opacity: 0.82; }
+
+    /* ===== GITHUB STRIP ===== */
+    .github-strip {
+      background: var(--charcoal);
+      border-radius: var(--radius-lg);
+      padding: 36px 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 56px;
+    }
+
+    .github-strip h3 {
+      font-family: var(--font-display);
+      color: #fff;
+      font-size: 1.4rem;
+      margin: 0 0 6px;
+    }
+
+    .github-strip p {
+      color: rgba(255,255,255,0.55);
+      font-size: 15px;
+      margin: 0;
+    }
+
+    .btn-github {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 30px;
+      border-radius: 999px;
+      background: var(--gold);
+      color: var(--charcoal);
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font-body);
+      text-decoration: none;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+
+    .btn-github:hover { background: var(--gold-light); transform: translateY(-2px); color: var(--charcoal); }
+
+    /* ===== STATS ROW ===== */
+    .stats-row {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1;
+    }
+
+    .stat-number span { color: var(--gold); }
+
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 991px) {
+      .projects-hero { padding: 100px 0 56px; }
+      .github-strip { padding: 26px 22px; }
+    }
+
+    @media (max-width: 576px) {
+      .projects-hero h1 { font-size: 2rem; }
+      .projects-hero p { font-size: 1rem; }
+      .tmp-header-area-start .logo img { max-width: 140px; max-height: 48px; }
+    }
+
+    /* theme-gradient override */
+    .theme-gradient,
+    .theme-gradient * {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+  </style>
+</head>
+
+<body class="tmp-white-version">
+
+  <!-- ===== HEADER ===== -->
+  <header class="tmp-header-area-start header-one header--sticky header--transparent">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="header-content">
+
+            <div class="logo">
+              <a href="../index.html">
+                <img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti — Data Analyst Portfolio">
+                <img class="logo-white" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti — Data Analyst Portfolio">
+              </a>
+            </div>
+
+            <nav class="tmp-mainmenu-nav d-none d-xl-block">
+              <ul class="tmp-mainmenu">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#specialization">What I Do</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="../index.html#skills">Skills</a></li>
+                <li><a href="../index.html#contacts">Contact</a></li>
+              </ul>
+            </nav>
+
+            <div class="tmp-header-right">
+              <a class="btn-back d-none d-xl-flex" href="../index.html#projects">
+                <i class="fa-sharp fa-regular fa-arrow-left"></i> Back to Portfolio
+              </a>
+              <div class="tmp-side-collups-area d-block d-xl-none" style="margin-left:12px;">
+                <button class="tmp-menu-bars humberger_menu_active" aria-label="Open menu">
+                  <i class="fa-regular fa-bars-staggered"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="d-block d-xl-none">
+    <div class="tmp-popup-mobile-menu">
+      <div class="inner">
+        <div class="header-top">
+          <div class="logo">
+            <a href="../index.html">
+              <img class="logo-dark" src="../assets/images/logo/Mylogo.png" alt="Carlton Waiti Portfolio">
+            </a>
+          </div>
+          <div class="close-menu">
+            <button class="close-button tmp-round-action-btn" aria-label="Close">
+              <i class="fa-sharp fa-light fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+        <ul class="tmp-mainmenu">
+          <li><a href="../index.html#home">Home</a></li>
+          <li><a href="../index.html#specialization">What I Do</a></li>
+          <li><a href="../index.html#about">About</a></li>
+          <li><a href="../index.html#skills">Skills</a></li>
+          <li><a href="../index.html#contacts">Contact</a></li>
+        </ul>
+        <div class="social-wrapper mt--40">
+          <span class="subtitle">Find me</span>
+          <div class="social-link">
+            <a href="https://www.linkedin.com/in/carlton-waiti" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://github.com/Carl-ctrl-design" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i></a>
+            <a href="https://wa.me/254796557704" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="projects-hero">
+    <div class="container">
+      <span class="section-label tmp-scroll-trigger tmp-fade-in animation-order-1">Portfolio</span>
+      <h1 class="tmp-scroll-trigger tmp-fade-in animation-order-2">
+        Business Analytics<br>Case Studies
+      </h1>
+      <div class="gold-divider"></div>
+      <p class="tmp-scroll-trigger tmp-fade-in animation-order-3">
+        Every project is structured as a consultant would present to a client: business problem → data preparation → analysis → insights → recommendations. Projects independently rated 9.1–9.8 / 10.
+      </p>
+
+      <!-- Filter bar -->
+      <div class="filter-bar tmp-scroll-trigger tmp-fade-in animation-order-4">
+        <button class="filter-pill active" data-filter="all">All Projects</button>
+        <button class="filter-pill" data-filter="sql">SQL</button>
+        <button class="filter-pill" data-filter="powerbi">Power BI</button>
+        <button class="filter-pill" data-filter="excel">Excel</button>
+        <button class="filter-pill" data-filter="finance">Financial</button>
+        <button class="filter-pill" data-filter="progress">In Progress</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS GRID ===== -->
+  <section class="projects-section">
+    <div class="container">
+
+      <!-- Stats -->
+      <div class="stats-row tmp-scroll-trigger tmp-fade-in animation-order-1">
+        <div class="stat-item">
+          <div class="stat-number">5<span>+</span></div>
+          <div class="stat-label">Completed Projects</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">9.8<span>/10</span></div>
+          <div class="stat-label">Top Project Rating</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Tools Mastered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">2</div>
+          <div class="stat-label">In Progress</div>
+        </div>
+      </div>
+
+      <div class="row g-4" id="projects-grid">
+
+        <!-- ═══════════════════════════════
+             PROJECT 1: Excel Superstore
+             filter: excel
+             ═══════════════════════════════ -->
+        <div class="col-lg-6 col-md-6" data-filter="excel">
+          <article class="cw-project-card tmp-scroll-trigger tmp-fade-in animation-order-1">
+            <div class="cw-card-img">
+              <img src="../assets/images/latest-portfolio/Sales Superstore dashboard.png"
+                   alt="Excel Superstore Sales Analysis — Carlton Waiti Dashboard">
+            </div>
+            <div class="cw-card-body">
+              <span class="rating-badge"><i class="fas fa-star"></i> Completed</span>
+              <h3 class="cw-card-title">Excel Superstore Sales Analysis</h3>
+              <p class="cw-card-question">
+                <strong style="color:var(--charcoal);">Business question:</strong> Which product categories, regions, and customer segments are driving profit — and which are destroying it?
+              </p>
+              <div class="cw-card-finding">
+                <strong>Key finding:</strong> Furniture's discount strategy eroded margins despite high revenue. The Tables sub-category had a negative profit margin across all regions.
+              </div>
+              <div class="tool-tags">
+                <span class="tool-tag">Excel Advanced</span>
+                <span class="tool-tag">PivotTables</span>
+                <span class="tool-tag">KPI Dashboard</span>
+                <span class="tool-tag">9,994 rows</span>
+                <span class="tool-tag">Data Cleaning</span>
+              </div>
+            </div>
+            <div class="cw-card-footer">
+              <a class="btn-gold" href="retail-sales.html">
+                View Case Study <i class="fa-sharp fa-regular fa-arrow-right"></i>
+              </a>
+              <a class="btn-outline-gold" href="https://github.com/Carl-ctrl-design/superstore-sales-analysis" target="_blank" rel="noopener">
+                <i class="fa-brands fa-github"></i> GitHub
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- ═══════════════════════════════
+             PROJECT 2: Olist SQL
+             filter: sql
+             ═══════════════════════════════ -->
+        <div class="col-lg-6 col-md-6" data-filter="sql">
+          <article class="cw-project-card tmp-scroll-trigger tmp-fade-in animation-order-2">
+            <div class="cw-card-img" style="background:linear-gradient(135deg,#1C1C1E,#2A2A2D);">
+              <div class="cw-card-placeholder">
+                <i class="fas fa-database"></i>
+                <span>Olist SQL E-Commerce Analysis</span>
+              </div>
+            </div>
+            <div class="cw-card-body">
+              <span class="rating-badge"><i class="fas fa-star"></i> Rated 9.5 / 10</span>
+              <h3 class="cw-card-title">Olist SQL E-Commerce Analysis</h3>
+              <p class="cw-card-question">
+                <strong style="color:var(--charcoal);">Business question:</strong> Which seller categories generate the most revenue, and how does delivery performance impact customer satisfaction?
+              </p>
+              <div class="cw-card-finding">
+                <strong>Key finding:</strong> Late deliveries correlated directly with 1-star reviews. Top 10 sellers drove 23% of total revenue using DENSE_RANK() window analysis.
+              </div>
+              <div class="tool-tags">
+                <span class="tool-tag">PostgreSQL 17</span>
+                <span class="tool-tag">CTEs</span>
+                <span class="tool-tag">Window Functions</span>
+                <span class="tool-tag">LAG()</span>
+                <span class="tool-tag">DENSE_RANK()</span>
+                <span class="tool-tag">10 Queries</span>
+              </div>
+            </div>
+            <div class="cw-card-footer">
+              <a class="btn-gold" href="customer-segmentation.html">
+                View Case Study <i class="fa-sharp fa-regular fa-arrow-right"></i>
+              </a>
+              <a class="btn-outline-gold" href="https://github.com/Carl-ctrl-design/olist-sql-analysis-project" target="_blank" rel="noopener">
+                <i class="fa-brands fa-github"></i> GitHub
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- ═══════════════════════════════
+             PROJECT 3: Olist Power BI
+             filter: powerbi
+             ═══════════════════════════════ -->
+        <div class="col-lg-6 col-md-6" data-filter="powerbi">
+          <article class="cw-project-card tmp-scroll-trigger tmp-fade-in animation-order-3">
+            <div class="cw-card-img" style="background:linear-gradient(135deg,#2A2A2D,#3A3A3E);">
+              <div class="cw-card-placeholder">
+                <i class="fas fa-chart-bar"></i>
+                <span>Olist Power BI Executive Dashboard</span>
+              </div>
+            </div>
+            <div class="cw-card-body">
+              <span class="rating-badge"><i class="fas fa-star"></i> Rated 9.1 / 10</span>
+              <h3 class="cw-card-title">Olist Power BI Executive Dashboard</h3>
+              <p class="cw-card-question">
+                <strong style="color:var(--charcoal);">Business question:</strong> How do we give leadership a single 5-page view of e-commerce performance across orders, revenue, delivery, and satisfaction?
+              </p>
+              <div class="cw-card-finding">
+                <strong>Key finding:</strong> PARALLELPERIOD YoY comparisons revealed Q4 seasonal revenue spikes of 34% — missed by previous flat monthly reporting.
+              </div>
+              <div class="tool-tags">
+                <span class="tool-tag">Power BI</span>
+                <span class="tool-tag">Star Schema</span>
+                <span class="tool-tag">10 DAX Measures</span>
+                <span class="tool-tag">PARALLELPERIOD</span>
+                <span class="tool-tag">AVERAGEX</span>
+                <span class="tool-tag">7 Relationships</span>
+              </div>
+            </div>
+            <div class="cw-card-footer">
+              <a class="btn-gold" href="executive-dashboard.html">
+                View Case Study <i class="fa-sharp fa-regular fa-arrow-right"></i>
+              </a>
+              <a class="btn-outline-gold" href="https://github.com/Carl-ctrl-design/olist-powerbi-dashboard" target="_blank" rel="noopener">
+                <i class="fa-brands fa-github"></i> GitHub
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- ═══════════════════════════════
+             PROJECT 4: Safaricom SQL
+             filter: sql, finance
+             ═══════════════════════════════ -->
+        <div class="col-lg-6 col-md-6" data-filter="sql finance">
+          <article class="cw-project-card tmp-scroll-trigger tmp-fade-in animation-order-4">
+            <div class="cw-card-img" style="background:linear-gradient(135deg,#0A0A14,#1C1C2E);">
+              <div class="cw-card-placeholder">
+                <i class="fas fa-building"></i>
+                <span>Safaricom SQL Financial Analysis</span>
+              </div>
+            </div>
+            <div class="cw-card-body">
+              <span class="rating-badge"><i class="fas fa-star"></i> Rated 9.6 / 10</span>
+              <h3 class="cw-card-title">Safaricom SQL Financial Analysis</h3>
+              <p class="cw-card-question">
+                <strong style="color:var(--charcoal);">Business question:</strong> What does 10 years of Safaricom's audited financials reveal about revenue composition, margin trends, and strategic risk?
+              </p>
+              <div class="cw-card-finding">
+                <strong>Key finding:</strong> Identified Ethiopia IAS 29 hyperinflation gain anomaly, M-PESA COVID zero-rating inflection point, and FY2022 capex spike as strategic acquisition — not infrastructure investment.
+              </div>
+              <div class="tool-tags">
+                <span class="tool-tag">PostgreSQL</span>
+                <span class="tool-tag">IFRS-Adjusted</span>
+                <span class="tool-tag">E&Y Audited Data</span>
+                <span class="tool-tag">6 CFO Queries</span>
+                <span class="tool-tag">3 Analytical Views</span>
+                <span class="tool-tag">10 Years Data</span>
+              </div>
+            </div>
+            <div class="cw-card-footer">
+              <a class="btn-gold" href="https://github.com/Carl-ctrl-design/safaricom_sql_financial_analysis" target="_blank" rel="noopener">
+                View on GitHub <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- ═══════════════════════════════
+             PROJECT 5: Safaricom Power BI ★ BEST
+             filter: powerbi, finance
+             ═══════════════════════════════ -->
+        <div class="col-lg-6 col-md-6" data-filter="powerbi finance">
+          <article class="cw-project-card" style="border:1.5px solid var(--gold);box-shadow:0 0 0 1px var(--gold-dim),var(--shadow);">
+            <div class="card-top-banner">★ Highest Rated Project</div>
+            <div class="cw-card-img" style="background:linear-gradient(135deg,#040410,#0A0A1E);">
+              <div class="cw-card-placeholder">
+                <i class="fas fa-chart-line" style="color:var(--gold);"></i>
+                <span style="color:#fff;">Safaricom Power BI Financial Dashboard</span>
+              </div>
+            </div>
+            <div class="cw-card-body">
+              <span class="rating-badge"><i class="fas fa-star"></i> Rated 9.8 / 10</span>
+              <h3 class="cw-card-title">Safaricom Power BI Financial Dashboard</h3>
+              <p class="cw-card-question">
+                <strong style="color:var(--charcoal);">Business question:</strong> How do we present 10 years of Safaricom's audited financials in a CFO-ready executive dashboard that supports strategic decisions?
+              </p>
+              <div class="cw-card-finding">
+                <strong>Key finding:</strong> 5-page dark-canvas dashboard with 20 DAX measures including conditional color hex and YoY label measures. Bookmark navigation across revenue, cost, margin, capex, and M-PESA views. Primary source: Ernst & Young audited data.
+              </div>
+              <div class="tool-tags">
+                <span class="tool-tag">Power BI</span>
+                <span class="tool-tag">20 DAX Measures</span>
+                <span class="tool-tag">Conditional Color Hex</span>
+                <span class="tool-tag">YoY Labels</span>
+                <span class="tool-tag">Bookmark Navigation</span>
+                <span class="tool-tag">Dark Canvas</span>
+              </div>
+            </div>
+            <div class="cw-card-footer">
+              <a class="btn-gold" href="https://github.com/Carl-ctrl-design/safaricom-powerbi-dashboard" target="_blank" rel="noopener">
+                View on GitHub <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <!-- ═══════════════════════════════
+             PROJECT 6: IBM HR (In Progress)
+             filter: powerbi, progress
+             ═══════════════════════════════ -->
+        <div class="col-lg-6 col-md-6" data-filter="powerbi progress">
+          <article class="cw-project-card card-in-progress">
+            <div class="cw-card-img" style="background:var(--off-white);">
+              <div class="cw-card-placeholder">
+                <i class="fas fa-users" style="color:var(--text-muted);"></i>
+                <span style="color:var(--text-muted);">IBM HR Analytics Dashboard</span>
+              </div>
+            </div>
+            <div class="cw-card-body">
+              <span class="progress-badge">⏳ In Progress</span>
+              <h3 class="cw-card-title">IBM HR Analytics Dashboard</h3>
+              <p class="cw-card-question">
+                <strong style="color:var(--charcoal);">Business question:</strong> What employee attributes and departmental patterns are driving attrition, and what is the true cost to the organization?
+              </p>
+              <div class="cw-card-finding">
+                <strong>Approach:</strong> Power BI with a cost-of-attrition DAX measure, attrition segmentation by role and tenure, and a 5-page executive dashboard. Coming soon.
+              </div>
+              <div class="tool-tags">
+                <span class="tool-tag">Power BI</span>
+                <span class="tool-tag">HR Analytics</span>
+                <span class="tool-tag">Attrition Cost DAX</span>
+                <span class="tool-tag">5-Page Dashboard</span>
+              </div>
+            </div>
+            <div class="cw-card-footer">
+              <span style="font-size:13.5px;color:var(--text-muted);padding:10px 0;line-height:1.5;">
+                Check GitHub for progress updates
+              </span>
+            </div>
+          </article>
+        </div>
+
+        <!-- ═══════════════════════════════
+             PROJECT 7: Python Forecasting (In Progress)
+             filter: progress
+             ═══════════════════════════════ -->
+        <div class="col-lg-6 col-md-6" data-filter="progress">
+          <article class="cw-project-card card-in-progress">
+            <div class="cw-card-img" style="background:var(--off-white);">
+              <div class="cw-card-placeholder">
+                <i class="fab fa-python" style="color:var(--text-muted);"></i>
+                <span style="color:var(--text-muted);">Python Demand Forecasting</span>
+              </div>
+            </div>
+            <div class="cw-card-body">
+              <span class="progress-badge">⏳ In Progress</span>
+              <h3 class="cw-card-title">Python Demand Forecasting</h3>
+              <p class="cw-card-question">
+                <strong style="color:var(--charcoal);">Business question:</strong> Can we forecast product demand from the Superstore dataset to improve inventory planning and reduce stockouts?
+              </p>
+              <div class="cw-card-finding">
+                <strong>Approach:</strong> Pandas for data preparation, Matplotlib for visualization, and time-series forecasting in Jupyter Notebook using the Superstore dataset.
+              </div>
+              <div class="tool-tags">
+                <span class="tool-tag">Python</span>
+                <span class="tool-tag">Pandas</span>
+                <span class="tool-tag">Matplotlib</span>
+                <span class="tool-tag">Jupyter Notebook</span>
+                <span class="tool-tag">Forecasting</span>
+              </div>
+            </div>
+            <div class="cw-card-footer">
+              <span style="font-size:13.5px;color:var(--text-muted);padding:10px 0;line-height:1.5;">
+                Check GitHub for progress updates
+              </span>
+            </div>
+          </article>
+        </div>
+
+      </div><!-- /row -->
+
+      <!-- GitHub strip -->
+      <div class="github-strip tmp-scroll-trigger tmp-fade-in animation-order-1">
+        <div>
+          <h3>All projects are fully documented on GitHub</h3>
+          <p>SQL scripts, DAX files, data models, and written analysis — everything is open and reviewable.</p>
+        </div>
+        <a class="btn-github" href="https://github.com/Carl-ctrl-design" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github"></i> github.com/Carl-ctrl-design
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="../assets/js/vendor/modernizer.js"></script>
+  <script src="../assets/js/vendor/jquery.js"></script>
+  <script src="../assets/js/vendor/jquery-ui.min.js"></script>
+  <script src="../assets/js/vendor/waypoints.min.js"></script>
+  <script src="../assets/js/plugins/odometer.js"></script>
+  <script src="../assets/js/vendor/appear.js"></script>
+  <script src="../assets/js/vendor/jquery-one-page-nav.js"></script>
+  <script src="../assets/js/vendor/tilt.js"></script>
+  <script src="../assets/js/plugins/swiper.js"></script>
+  <script src="../assets/js/plugins/gsap.js"></script>
+  <script src="../assets/js/plugins/splittext.js"></script>
+  <script src="../assets/js/plugins/scrolltigger.js"></script>
+  <script src="../assets/js/plugins/scrolltoplugins.js"></script>
+  <script src="../assets/js/plugins/smoothscroll.js"></script>
+  <script src="../assets/js/vendor/twinmax.js"></script>
+  <script src="../assets/js/vendor/bootstrap.min.js"></script>
+  <script src="../assets/js/vendor/waw.js"></script>
+  <script src="../assets/js/vendor/intro-video.js"></script>
+  <script src="../assets/js/plugins/isotop.js"></script>
+  <script src="../assets/js/plugins/animation.js"></script>
+  <script src="../assets/js/vendor/backtop.js"></script>
+  <script src="../assets/js/plugins/text-type.js"></script>
+  <script src="../assets/js/main.js"></script>
+
+  <!-- Filter script -->
+  <script>
+    (function () {
+      const pills = document.querySelectorAll('.filter-pill');
+      const cards = document.querySelectorAll('#projects-grid > [data-filter]');
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', function () {
+          pills.forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+
+          const filter = this.dataset.filter;
+
+          cards.forEach(card => {
+            const filters = card.dataset.filter || '';
+            const show = filter === 'all' || filters.includes(filter);
+            card.style.display = show ? '' : 'none';
+
+            // smooth fade
+            if (show) {
+              card.style.opacity = '0';
+              setTimeout(() => { card.style.transition = 'opacity 0.35s'; card.style.opacity = '1'; }, 10);
+            }
+          });
+        });
+      });
+
+      /* Scroll to top */
+      const scrollBtn = document.createElement('div');
+      scrollBtn.innerHTML = '<i class="fa-light fa-arrow-up"></i>';
+      Object.assign(scrollBtn.style, {
+        position:'fixed', right:'24px', bottom:'24px',
+        width:'52px', height:'52px', borderRadius:'50%',
+        background:'#1C1C1E', color:'#fff',
+        display:'none', alignItems:'center', justifyContent:'center',
+        cursor:'pointer', zIndex:'9999', fontSize:'16px',
+        border:'1px solid rgba(255,255,255,0.1)',
+        boxShadow:'0 8px 24px rgba(0,0,0,0.2)',
+        transition:'all 0.25s'
+      });
+      scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      scrollBtn.addEventListener('mouseenter', () => { scrollBtn.style.background = '#C9A84C'; });
+      scrollBtn.addEventListener('mouseleave', () => { scrollBtn.style.background = '#1C1C1E'; });
+      document.body.appendChild(scrollBtn);
+
+      const toggleScroll = () => {
+        scrollBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+      };
+      window.addEventListener('scroll', toggleScroll, { passive: true });
+      toggleScroll();
+    })();
+  </script>
+
+</body>
+</html>
